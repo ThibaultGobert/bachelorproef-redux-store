@@ -1,4 +1,5 @@
-% Encoding: windows-1252
+% This file was created with JabRef 2.9.2.
+% Encoding: Cp1252
 
 @ARTICLE{Doll1954,
   author = {Doll, Richard and Hill, A Bradford},
@@ -47,14 +48,6 @@
   year   = {2017},
 }
 
-@Article{React01,
-  author = {Facebook},
-  title  = {React.js},
-}
-
-@Article{Redux02,
-  author = {MIT},
-  title  = {Redux.js},
-}
 
 @Comment{jabref-meta: databaseType:bibtex;}
+
