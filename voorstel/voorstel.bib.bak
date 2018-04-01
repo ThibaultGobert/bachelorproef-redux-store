@@ -1,5 +1,4 @@
-% This file was created with JabRef 2.9.2.
-% Encoding: Cp1252
+% Encoding: windows-1252
 
 @ARTICLE{Doll1954,
   author = {Doll, Richard and Hill, A Bradford},
@@ -48,6 +47,38 @@
   year   = {2017},
 }
 
+@Misc{React01,
+  author = {React},
+  title  = {React.js},
+  year   = {2018},
+  url    = {https://reactjs.org/},
+}
 
-@Comment{jabref-meta: databaseType:bibtex;}
+@Misc{Redux02,
+  author = {Redux},
+  title  = {Redux.js},
+  year   = {2018},
+  url    = {https://redux.js.org/},
+}
 
+@Misc{MobX01,
+  author = {MobX},
+  title  = {MobX.js},
+  year   = {2017},
+  url    = {https://mobx.js.org/},
+}
+
+@Misc{Flux01,
+  author = {Flux},
+  title  = {Flux},
+  year   = {2015},
+  url    = {https://facebook.github.io/flux/},
+}
+
+@Misc{SO01,
+  author = {Stack Overflow},
+  title  = {Stack Overflow},
+  date   = {2018},
+}
+
+@Comment{jabref-meta: databaseType:biblatex;}
