@@ -17,6 +17,38 @@ De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te
   \item \ldots
 \end{itemize}
 
+\section{Context}
+\label{sec:context}
+
+Alvorens er dieper kan worden ingegaan op het onderzoek, zijn er een aantal begrippen en concepten die verduidelijkt moeten worden. Eerst een vooral: er wordt gebruik gemaakt van 2 React-Redux projecten. Wat zijn React en Redux? React is een JavaScript library voor het bouwen van user interfaces. React werkt met components. In de component schrijf je de gewenste code die moet gerenderd worden. Een component ontvangt parameters, genaamd \textit{props} en retourneert hiërarchische views die getoond worden door de render methode. Elke component kan onafhankelijk functioneren, wat het dus mogelijk maakt om verschillende components in een andere component in te laden. \autocite{React01} 
+
+Redux is een state container voor JavaScript apps. Redux kan dus gebruikt worden samen met React of andere view libraries. 
+In Redux zijn er een aantal basis begrippen die moeten uitgelegd worden voor de verdere voortgang van dit onderzoek, zoals actions, reducers, store en containers. \autocite{Redux02}
+
+Actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Actions zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke actie uitgevoerd wordt. Deze types zijn string constanten die in een aparte module worden opgeslaan. 
+
+Reducers specificeren hoe de applicatie zijn state verandert ten gevolge van de actions die verzonden zijn naar de store. Actions beschrijven alleen maar het feit dat er iets gebeurd is, ze beschrijven niet hoe de applicatie zijn state verandert.
+Vooraleer er kan gezegd worden hoe een reducer dit doet, moet worden uitgelegd wat een pure functie is. Een pure functie is een functie die met dezelfde input altijd dezelfde output produceert. \autocite{Pure01}
+
+Een reducer is een pure functie die de vorige state en een actie neemt en daaruit de nieuwe state retourneert. Het is belangrijk dat de reducer puur blijft, een aantal zaken zijn een no-go zoals API-calls en niet-pure functies aanroepen. De uitkomst moet voorspelbaar blijven. Redux roept de reducer aan met een \textit{undefined} state voor de eerste keer. Daar moet de initial state van de applicatie worden ingesteld. \autocite{Redux02}
+
+Actions representeren het feit dat er iets gebeurd is en reducers updaten te state aan de hand van deze actions. De store is een object die deze zaken samenbrengt. Deze store heeft een aantal verantwoordelijkheden: 
+\begin{itemize}
+	\item vasthouden van de state van de applicatie
+	\item toegang geven tot de state van de applicatie
+	\item toelaten om de state te updaten
+	\item registreren van listeners
+\end{itemize}
+Het laatste punt laat toe om een callback te registreren die de redux store zal aanroepen elke keer een actie wordt gedispatched. Op deze manier kan de UI van de applicatie upgedate worden naargelang de state van de applicatie. 
+
+Een container component is een component die verantwoordelijk is voor het verkrijgen van data. Een container component gaat data nemen uit de state. Het gaat eigenlijk de nodige delen van de data nemen en doorgeven als \textit{props}. Een container component is ook verantwoordelijk voor het dispatchen van actions die veranderingen maken aan de state van de applicatie. 
+
+
+
+
+
+
+
 \section{Probleemstelling}
 \label{sec:probleemstelling}
 
