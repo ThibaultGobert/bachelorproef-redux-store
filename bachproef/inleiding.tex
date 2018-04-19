@@ -5,34 +5,28 @@
 \chapter*{Inleiding}
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
-
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
-
 \section{Context}
 \label{sec:context}
 
-Alvorens er dieper kan worden ingegaan op het onderzoek, zijn er een aantal begrippen en concepten die verduidelijkt moeten worden. Eerst een vooral: er wordt gebruik gemaakt van 2 React-Redux projecten. Wat zijn React en Redux? React is een JavaScript library voor het bouwen van user interfaces. React werkt met components. In de component schrijf je de gewenste code die moet gerenderd worden. Een component ontvangt parameters, genaamd \textit{props} en retourneert hiërarchische views die getoond worden door de render methode. Elke component kan onafhankelijk functioneren, wat het dus mogelijk maakt om verschillende components in een andere component in te laden. \autocite{React01} 
+Zoals eerder vermeld, wordt gebruik gemaakt van twee React-Redux projecten. React is een JavaScript library voor het bouwen van user interfaces. React werkt met components. In de component schrijf je de gewenste code die moet gerenderd worden. Een component ontvangt parameters, genaamd \textit{props} en retourneert hiërarchische views die getoond worden door de render methode. Elke component kan onafhankelijk functioneren, wat het dus mogelijk maakt om verschillende components in een andere component in te laden. \autocite{React01} 
 
 Redux is een state container voor JavaScript apps. Redux kan dus gebruikt worden samen met React of andere view libraries. 
-In Redux zijn er een aantal basis begrippen die moeten uitgelegd worden voor de verdere voortgang van dit onderzoek, zoals actions, reducers, store en containers. \autocite{Redux02}
+In Redux zijn er een aantal basis begrippen die moeten uitgelegd worden voor de verdere voortgang van dit onderzoek, zoals actions, reducers, store en containers. Deze begrippen vormen eigenlijk de omkadering van Redux. \autocite{Redux02}
 
-Actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Actions zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke actie uitgevoerd wordt. Deze types zijn string constanten die in een aparte module worden opgeslaan. 
+De Redux architectuur heeft een unidirectionele data flow, dit wil zeggen de data steeds dezelfde richting/flow aanneemt. Dit zorgt er voor dat de logica van de applicatie voorspelbaar wordt.  
+
+Een container component is een component die verantwoordelijk is voor het verkrijgen van data. Een container component gaat subscriben op de store, om zo een deel van de Redux state tree te kunnen lezen. Het gaat eigenlijk de nodige delen van de data nemen en doorgeven als \textit{props}. Een container component is ook verantwoordelijk voor het dispatchen van actions die veranderingen maken aan de state van de applicatie. 
+
+Deze actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Actions zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke actie uitgevoerd wordt. Deze types zijn string constanten die in een aparte module worden opgeslaan. 
+
+Als er dan gekeken wordt naar de data lifecycle dan worden er eerst actions gedispatched naar de store. De store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action. Hierna zal de root reducer de output van meerdere reducers combineren in een single state tree. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
 
 Reducers specificeren hoe de applicatie zijn state verandert ten gevolge van de actions die verzonden zijn naar de store. Actions beschrijven alleen maar het feit dat er iets gebeurd is, ze beschrijven niet hoe de applicatie zijn state verandert.
 Vooraleer er kan gezegd worden hoe een reducer dit doet, moet worden uitgelegd wat een pure functie is. Een pure functie is een functie die met dezelfde input altijd dezelfde output produceert. \autocite{Pure01}
 
 Een reducer is een pure functie die de vorige state en een actie neemt en daaruit de nieuwe state retourneert. Het is belangrijk dat de reducer puur blijft, een aantal zaken zijn een no-go zoals API-calls en niet-pure functies aanroepen. De uitkomst moet voorspelbaar blijven. Redux roept de reducer aan met een \textit{undefined} state voor de eerste keer. Daar moet de initial state van de applicatie worden ingesteld. \autocite{Redux02}
 
-Actions representeren het feit dat er iets gebeurd is en reducers updaten te state aan de hand van deze actions. De store is een object die deze zaken samenbrengt. Deze store heeft een aantal verantwoordelijkheden: 
+Actions representeren het feit dat er iets gebeurd is en reducers updaten de state aan de hand van deze actions. De store is een object die deze zaken samenbrengt. Deze store heeft een aantal verantwoordelijkheden: 
 \begin{itemize}
 	\item vasthouden van de state van de applicatie
 	\item toegang geven tot de state van de applicatie
@@ -41,28 +35,22 @@ Actions representeren het feit dat er iets gebeurd is en reducers updaten te sta
 \end{itemize}
 Het laatste punt laat toe om een callback te registreren die de redux store zal aanroepen elke keer een actie wordt gedispatched. Op deze manier kan de UI van de applicatie upgedate worden naargelang de state van de applicatie. 
 
-Een container component is een component die verantwoordelijk is voor het verkrijgen van data. Een container component gaat data nemen uit de state. Het gaat eigenlijk de nodige delen van de data nemen en doorgeven als \textit{props}. Een container component is ook verantwoordelijk voor het dispatchen van actions die veranderingen maken aan de state van de applicatie. 
-
-
-
-
-
 
 
 \section{Probleemstelling}
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's,'' systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+Het probleem ligt in het gebruiken van components uit een tweede React-Redux project. Door het importeren van een container component in het eerste project worden de actions die gedispatched worden door die component niet herkent in de store. Deze zitten namelijk in de store van het tweede project. Door de reducers te combineren van beide projecten in een grote root reducer wordt dit probleem opgelost. Dit is zo omdat de store dan de corresponderende reducer kan aanroepen naargelang de action die gedispatched wordt. Het probleem hierbij is dat de reducers van het tweede project gekopieerd moeten worden in de root reducer van het eerste project. Dit resulteert in onstabiele code wanneer er reducers toegevoegd en/of verwijderd worden in het tweede project. Dit onderzoek heeft een meerwaarde voor bedrijven/personen die een React-Redux project hebben en functionaliteit (componenten) willen gebruiken uit een bestaande React-Redux repository. 
+
 
 \section{Onderzoeksvraag}
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+Hoe kunnen twee root reducers met elkaar gecombineerd worden?
 
 \section{Onderzoeksdoelstelling}
 \label{sec:onderzoeksdoelstelling}
-
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk.
+Het beoogde resultaat van de bachelorproef is om een minimaal aantal lines of code te hebben. Idealiter is dit een aangepaste versie van de functie \textit{combineReducers} waarbij er twee root reducers worden gecombineerd met elkaar.
 
 \section{Opzet van deze bachelorproef}
 \label{sec:opzet-bachelorproef}
@@ -79,5 +67,5 @@ In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvraag. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
 
