@@ -6,6 +6,9 @@
 % bijzonder aan wat de link is met het vorige en volgende hoofdstuk.
 
 % Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
+\paragraph{inleiding}
+Zoals eerder vermeld wordt er gebruik gemaakt van twee React-Redux projecten. In dit hoofdstuk wordt meer informatie gegeven omtrent de achtergrond van deze projecten en wat er nodig is om deze met elkaar te laten communiceren.
+
 \section{React}
 Volgens \autocite{React01} is React een JavaScript library om user interfaces te bouwen. React is component-based. Een component implementeert een \textit{render} methode die data als input neemt en een view retourneert. Om dit te doen wordt JSX gebruikt. Er kunnen simpele views gemaakt worden voor elke state van de applicatie en React zal deze updaten en de juiste componenten renderen wanneer de data verandert.
 
@@ -14,7 +17,7 @@ JSX is een XML/HTML-achtige syntax gebruikt door React die ECMAScript uitbreidt 
 (TODO REF JSX)
 
 \subsection{Components}
-Een enkele view van een user interface is opgedeeld in een aantal stukken, in een aantal components. De start component bevat een tree, die tree kan opgedeeld worden in een aantal sub-componenten. Deze kunnen dan weer opgedeeld worden in nog meer sub-componenten. Dit kan dus resulteren in een complexe tree met verschillende React componenten.  
+Een enkele view van een user interface is opgedeeld in een aantal stukken, in een aantal components. De start component bevat een tree, die tree kan opgedeeld worden in een aantal sub-componenten. Deze kunnen dan weer opgedeeld worden in nog meer sub-componenten. Dit kan dus resulteren in een complexe tree met verschillende React componenten. Er zijn echter ook nog verschillende soorten components, namelijk \textit{simple} en \textit{stateful}. 
 (TODO REF JSX ZELFDE)
 
 \paragraph{Simple component}
@@ -25,11 +28,58 @@ React components implementeren de \textit{render} methode, ze retourneren wat er
 In toevoeging met data als input nemen (via \textit{props}), kan een component zijn interne state data aanspreken. Wanneer de state data van een component verandert, wordt de render methode opnieuw aangeropen zodat de juiste data getoond wordt.
 \autocite{React01}
 
-Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet er nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
+\section{Redux}
+Door stateful components die elkaar aanroepen verhoogt de complexiteit om de state te beheren. Om tegen te gaan dat de controle verloren gaat over wanneer, hoe en waarom de state upgedate wordt, kan redux geïntroduceerd worden als oplossing om de state te managen. Redux zal eigenlijk proberen om de veranderingen op de state voorspelbaar te maken door bepaalde restricties op te leggen omtrent het updaten van de state. Deze restricties staan beschreven in de \textit{drie principes} van Redux.
 
-Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz. naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\TeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin, gebruik je \texttt{$\backslash${}textcite\{\}}.
-Soms wil je de auteur niet expliciet vernoemen, dan gebruik je \texttt{$\backslash${}autocite\{\}}. In de volgende paragraaf een voorbeeld van elk.
+\subsection{Drie principes}
 
-\textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
+\paragraph{Een enkele source}  
+De state van de hele applicatie zit in een object tree in een enkele \textit{store}. Een enkele state maakt het makkelijker om te debuggen of om de applicatie te inspecteren. Sommige functionaliteit kan snel geïmplementeerd worden hierdoor, zoals een undo/redo waar dan geswitched kan worden tussen een vorige en een volgende state van de applicatie. Dit kan dus enkel wanneer de hele state van de applicatie is opgeslaan in de object tree.
 
-\lipsum[7-20]
+\paragraph{State is read-only}
+De enige manier om een state te veranderen is door het verzenden van een \textit{action}, dit is een object dat beschrijft wat er gebeurt. Dit zorgt er voor dat callbacks nooit direct naar de state gaan schrijven. Ze tonen de intentie om de state te transformeren. Alle veranderingen zijn gecentraliseerd en gebeuren een voor een in een vaste volgorde.   
+
+\paragraph{Pure functies voor veranderingen}
+Om te specificeren hoe de state tree veranderd is ten gevolge van actions, worden pure \textit{reducers} geschreven. Reducers zijn eigenlijk pure functies die dan geëxporteerd worden. Ze nemen de vorige state en de action om zo de volgende state te retourneren. Het is belangrijk om een nieuw state object te retourneren in plaats van het muteren van de vorige state. 
+
+\subparagraph{Pure functie}
+Een pure functie is een functie die met dezelfde input altijd dezelfde output produceert.
+
+Redux draait nu net om de voorspelbaarheid en betrouwbaarheid. Door een mutatie kan deze state niet meer voorspelbaar of betrouwbaar zijn. 
+
+\subsection{Redux flow}
+In de subsectie \textit{Drie principes} kwamen een aantal core concepts voor van Redux. Om deze te verduidelijken zal hier een beschrijven van de Redux flow gegeven worden met nodige uitleg van de core concepts. 
+
+De Redux architectuur draait rond een strikte, unidirectionele data flow. Dit wil zeggen dat al de data in de applicatie hetzelfde lifecycle patroon volgt. Alle veranderingen zijn gecentraliseerd en gebeuren een voor een in een vaste volgorde. Dit zorgt er voor dat de logica van de applicatie voorspelbaar en betrouwbaar is. Het begunstigt ook data normalisatie, zodat er geen meerdere, onafhankelijke duplicaties zijn van dezelfde data die niet bewust zijn van elkaars bestaan. 
+
+De data lifecycle voor om het eender welke Redux app volgt 4 stappen:
+
+\begin{itemize}
+	\item een action wordt gedispatched op de store
+	\item de Redux store roept de reducer functie aan
+	\item de root reducer combineert output van meerdere reducers
+	\item de Redux store saved de volledige state tree
+\end{itemize}
+
+\subparagraph{Acties}
+Een action is een object die beschrijft wat er gebeurt.
+Deze actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Acties zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke action uitgevoerd wordt. Deze types zijn string constanten die in grote applicaties in een aparte module worden opgeslaan om overzichtelijk te houden. 
+
+\subparagraph{Reducers}
+Reducers specificeren hoe de state van de applicatie zal veranderen ten gevolge van een action die gedispatched wordt naar de store. Waar actions beschrijven dat er iets gebeurd is, beschrijven ze niet hoe de state van de applicatie veranderd is. Een reducer is een pure functie -zie vorige subparagraaf- die de vorige state van de applicatie en een action neemt en daaruit een nieuwe state zal retourneren. 
+Niet-pure functies aanroepen en mutaties zijn dus een no-go om de betrouwbaarheid en voorspelbaarheid van de applicatie te behouden. Redux zal de reducer aanroepen met een undefined state voor de eerste keer. Hier moet er dus een initiële state van de applicatie worden ingesteld.
+
+Elk van de reducers is zijn deel van de globale state aan het beheren. De \textit{state} parameter is verschillend voor elke reducer en hangt samen met het deel van de state die de reducer beheert.
+
+Op deze manier kunnen reducers gesplitst worden in aparte files om zo compleet onafhankelijk verschillende data domeinen te laten beheren door verschillende reducers. 
+
+Om deze reducers dan te combineren voor de volledige functionaliteit van het databeheer te hebben, wordt er gebruik gemaakt van de functie \textit{combineReducers}. Deze functie voert boilerplate logica uit om de reducers op te roepen aan de hand van hun keys en om de resultaten hiervan te combineren in een enkel object. 
+
+\subparagraph{boilerplate code}
+korte tekst die zonder veel aanpassingen kan worden hergebruikt
+
+\subparagraph{Store}
+
+
+
+
