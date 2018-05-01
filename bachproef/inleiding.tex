@@ -13,13 +13,14 @@ Zoals eerder vermeld, wordt gebruik gemaakt van twee React-Redux projecten. Reac
 Redux is een state container voor JavaScript apps. Redux kan dus gebruikt worden samen met React of andere view libraries. 
 In Redux zijn er een aantal basis begrippen die moeten uitgelegd worden voor de verdere voortgang van dit onderzoek, zoals actions, reducers, store en containers. Deze begrippen vormen eigenlijk de omkadering van Redux. \autocite{Redux02}
 
-De Redux architectuur heeft een unidirectionele data flow, dit wil zeggen de data steeds dezelfde richting/flow aanneemt. Dit zorgt er voor dat de logica van de applicatie voorspelbaar wordt.  
+De Redux architectuur heeft een unidirectionele data 
+, dit wil zeggen de data steeds dezelfde richting/flow aanneemt. Dit zorgt er voor dat de logica van de applicatie voorspelbaar wordt.  
 
 Een container component is een component die verantwoordelijk is voor het verkrijgen van data. Een container component gaat subscriben op de store, om zo een deel van de Redux state tree te kunnen lezen. Het gaat eigenlijk de nodige delen van de data nemen en doorgeven als \textit{props}. Een container component is ook verantwoordelijk voor het dispatchen van actions die veranderingen maken aan de state van de applicatie. 
 
 Deze actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Actions zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke actie uitgevoerd wordt. Deze types zijn string constanten die in een aparte module worden opgeslaan. 
 
-Als er dan gekeken wordt naar de data lifecycle dan worden er eerst actions gedispatched naar de store. De store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action. Hierna zal de root reducer de output van meerdere reducers combineren in een single state tree. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
+Als er dan gekeken wordt naar de data flow dan worden er eerst actions gedispatched naar de store. De store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action. Hierna zal de root reducer de output van meerdere reducers combineren in een single state tree. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
 
 Reducers specificeren hoe de applicatie zijn state verandert ten gevolge van de actions die verzonden zijn naar de store. Actions beschrijven alleen maar het feit dat er iets gebeurd is, ze beschrijven niet hoe de applicatie zijn state verandert.
 Vooraleer er kan gezegd worden hoe een reducer dit doet, moet worden uitgelegd wat een pure functie is. Een pure functie is een functie die met dezelfde input altijd dezelfde output produceert. \autocite{Pure01}

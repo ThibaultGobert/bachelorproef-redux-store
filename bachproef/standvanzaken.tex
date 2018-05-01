@@ -28,6 +28,45 @@ React components implementeren de \textit{render} methode, ze retourneren wat er
 In toevoeging met data als input nemen (via \textit{props}), kan een component zijn interne state data aanspreken. Wanneer de state data van een component verandert, wordt de render methode opnieuw aangeropen zodat de juiste data getoond wordt.
 \autocite{React01}
 
+
+\subsection{React lifecycle}
+Met React is het mogelijk om components te creëren door de voorziene methode van React te gebruiken. Deze methode verwacht een \textit{render} methode en zal een lifecycle triggeren, de lifecycle van een component. 
+Deze lifecycle kan onderverdeeld worden in 4 grote fasen:
+\begin{itemize}
+	\item initialisatie
+	\item mounten
+	\item updaten
+	\item unmounten
+\end{itemize}
+
+FIGUUR 2
+
+\paragraph{Initialisatie}
+In deze fase worden de initiële state en de default props ingesteld. De initiële state wordt in de constructor ingesteld, deze kan later altijd veranderd worden door de \textit{setState} methode. \textit{defaultProps} is een property van \textit{Component} die overschreven kan worden met nieuwe waarden voor de props. 
+
+\paragraph{mounten}
+In de tweede fase zijn er een aantal \textit{hook} methodes die aangeropen kunnen worden voor het mounten en na het mounten. Een hook methode is een methode waar je kan inpikken in de lifecycle en bestaande code kan veranderen of verbeteren naar eigen noden. 
+
+Al de dingen die moeten gebeuren voor een component gaat mounten moet gedefinieerd zijn in de \textit{componentWillMount}. Deze methode wordt een keer per lifecycle uitgevoerd voor de eerste \textit{render}. 
+
+Render zal de component mounten in de browser. Het is een pure methode, dus het geeft altijd dezelfde output gegeven dezelfde input. 
+
+Na deze eerste render, wordt de methode \textit{componentDidMount} aangeropen. Deze methode wordt opnieuw een keer per lifecycle uitgevoerd. 
+
+\paragraph{updaten}
+Deze derde fase start wanneer de React component succesvol gerenderd is op de browser. De component kan nu upgedate worden op twee manieren: het verzenden van nieuwe props of het updaten van de state. 
+
+Wanneer de component nieuwe props ontvangt of de state is upgedate, wordt in de methode \textit{shouldComponentUpdate} gevraagd of er een re-render moet gebeuren of niet. Deze methode retourneert dus een boolean en zal standaard re-renderen tenzij anders beschreven. Het is dus mogelijk om enkel een re-render uit te voeren als de props veranderen. Deze hook methode wordt vooral gebruikt als renderen een zware methode is. Dan is het niet voordelig om altijd alles opnieuw te renderen.
+
+Als de uitkomst van deze methode true is, dan zal de component updaten en wordt de hook methode \textit{componentWillUpdate} opgeropen. In deze methode worden de nodige voorbereidingen gedaan voor de volgende render, gelijkaardig als \textit{componentWillMount}. Hierna wordt de component dus opnieuw gerenderd. 
+
+Wanneer dit succesvol is dan zal \textit{componentDidUpdate} de third party libraries updaten en reloaden. 
+
+Wanneer echter de props veranderen en het is niet de eerste render dan zal in \textit{componentWillReceiveProps} de state en de props opnieuw gesynchroniseerd worden met elkaar. 
+
+\paragraph{unmounten}
+In de laatste fase is de component niet meer nodig en zal deze via \textit{componentWillUnmount} verwijderd worden. Hier kan er dan een cleanup gebeuren wat betreft user details en authorization tokens.
+
 \section{Redux}
 Door stateful components die elkaar aanroepen verhoogt de complexiteit om de state te beheren. Om tegen te gaan dat de controle verloren gaat over wanneer, hoe en waarom de state upgedate wordt, kan redux geïntroduceerd worden als oplossing om de state te managen. Redux zal eigenlijk proberen om de veranderingen op de state voorspelbaar te maken door bepaalde restricties op te leggen omtrent het updaten van de state. Deze restricties staan beschreven in de \textit{drie principes} van Redux.
 
@@ -61,7 +100,7 @@ De data lifecycle voor om het eender welke Redux app volgt 4 stappen:
 	\item de Redux store saved de volledige state tree
 \end{itemize}
 
-\subparagraph{Acties}
+\subparagraph{Actions}
 Een action is een object die beschrijft wat er gebeurt.
 Deze actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Acties zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke action uitgevoerd wordt. Deze types zijn string constanten die in grote applicaties in een aparte module worden opgeslaan om overzichtelijk te houden. 
 
@@ -79,7 +118,57 @@ Om deze reducers dan te combineren voor de volledige functionaliteit van het dat
 korte tekst die zonder veel aanpassingen kan worden hergebruikt
 
 \subparagraph{Store}
+In de vorige paragrafen werden actions en reducers gedefinieerd. Actions werden gedefinieerd als objecten die representeren wat er gebeurd is terwijl reducers gedefinieerd werden als pure functies die de state gaan updaten volgens de verkregen actions. De store is een object die deze zaken samenbrengt. Dit zorgt ervoor dat de store een aantal verantwoordelijkheden heeft:
 
+\begin{itemize}
+	\item het vasthouden van de state van de applicatie
+	\item toegang geven tot de state
+	\item toelaten dat de state upgedate kan worden door een action te dispatchen
+	\item listeners registreren via subscribe
+	\item listeners unsubscriben via de functie geretourneerd door subscribe
+\end{itemize}
+
+Het laatste punt laat toe om een callback te registreren (subscribe) die de redux store zal aanroepen elke keer een actie wordt gedispatched. Op deze manier kan de UI van de applicatie upgedate worden naargelang de state van de applicatie. 
+
+Het is belangrijk om te noteren dat er maar een store in de Redux applicatie is. Wanneer er logica moet gesplitst worden, is het beter om reducer compositie te gebruiken om later te combineren dan om meerdere stores te implementeren. Om deze reden wordt in dit onderzoek ook geopteerd om een extensie te schrijven op combineReducers van Redux in plaats van meerdere stores te implementeren.
+
+Om een store te creëren hebben we een reducer nodig. In een vorige paragraaf werd de methode combineReducers uitgelegd om meerdere reducers te combineren in een reducer. Deze gecombineerde reducer kan geïmporteerd worden en meegegeven worden als parameter aan de methode createStore om een store te creëren.
+
+Als er dan gekeken wordt naar de data flow dan worden er eerst actions gedispatched naar de store. De Redux store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action die gedispatched werd. Deze zal altijd dezelfde output hebben en dus voorspelbaar zijn aangezien reducers pure functies zijn.	 Hierna zal de root reducer de output van meerdere reducers combineren in een enkele state tree. Dit gebeurt met de functie combineReducers die de verschillende functies voor een bepaald deel van de state zal combineren. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
+
+\subparagraph{Connectie met React}
+React bindings zitten echter niet standaard in Redux, eerst moet de npm-package react-redux worden geïnstalleerd. Om React en Redux samen te laten functioneren wordt gebruik gemaakt van een opsplitsing in presentationele en container components. 
+ZIE FIGUUR 1
+
+Presentationele components zijn -zoals de naam aangeeft- prioritair voor de visualisatie. Ze verkrijgen enkel data via de props en sturen geen actions aan. 
+
+Daar waar presentationele components gericht zijn op de visualisatie, zijn de container components gericht op het functionele aspect. Ze voorzien andere container (of presentationele) components van data en gedrag. Deze components gaan ook actions aanroepen om aan te duiden dat de data moet veranderen.  
+
+
+\subparagraph{Containers}
+Het idee achter containers is dat ze de data gaan ophalen en dan de corresponderende sub-component gaan renderen. Deze data wordt gehaald uit de state en omgezet naar props voor die container. Daarna krijgen de sub-componenten de juiste props mee om hun data te renderen. r
+
+
+
+\subsection{Npm}
+Om de twee projecten met elkaar te laten communiceren, wordt gebruik gemaakt van npm. De extensie op Redux zal geschreven worden en onder een eigen package gepubliceerd worden op npm, op deze manier kan de geschreven extensie aangesproken worden. 
+(eigen)
+
+
+npm is 's werelds grootste software register met ongeveer 3 biljoen downloads per week. Het register bevat meer dan 600.000 packages. Open source developers van elk continent gebruiken npm voor het delen en lenen van packages. Veel organisaties gebruiken npm ook voor privaat development, zoals in dit onderzoek ook het geval is. 
+
+npm bestaat uit 3 verschillende componenten.
+\begin{itemize}
+	\item de website
+	\item de Command Line Interface (CLI)
+	\item het register
+\end{itemize}
+
+De website wordt gebruikt om verschillende packages te zoeken en zelf packages op te publiceren, privaat of publiek. Deze publicatie kan via de CLI gedaan worden
+(NPM REF)
+
+De grootste reden om npm te gebruiken is om bestaande packages aan te passen en de specialiseren naar eigen apps. Natuurlijk kan ook gebruik gemaakt worden van bestaande aangepaste packages van andere gebruikers.
+ 
 
 
 
