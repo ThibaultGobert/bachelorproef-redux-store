@@ -11,5 +11,25 @@
 %% mogelijke manier toegepast hebt om een antwoord te vinden op de
 %% onderzoeksvraag.
 
-\lipsum[21-25]
+\section{Analyse}
+Eerst werd een denk-analyse uitgevoerd om te achterhalen welke methodes er waren om de twee projecten met elkaar te laten communiceren. Om deze analyse uit te voeren werd gebruik gemaakt van de store van het hoofdproject. Daarna werden een reeks methodes uitgeprobeerd om te zien wat wel werkte en wat niet.
+
+\section{Methodes}
+\subsection{combineReducers}
+In de eerste methode werd geprobeerd om de root reducer van het scratch project rechtstreeks te integreren in de store van het hoofdproject. In de configuratie van de store wordt meegegeven wat de root reducer is en wat de initiële state van de applicatie is. De bedoeling was om een grote gecombineerde root reducer te maken om daarmee de store te initialiseren. Het enige wat hier aangepast werd aan de scratch-integration package was het exporteren van de root reducer in de index file.
+
+Twee root reducers met elkaar combineren via de methode \textit{combineReducers} gaat echter niet zomaar. Deze methode is een functie met als parameter de reducers die moeten gecombineerd worden. Zoals eerder vermeld bevat een reducer een key en een value. De parameter bevat dus een lijst van reducers met elk hun key en value. De functie \textit{combineReducers} overloopt deze lijst en vraagt eerst alle keys op en schrijft deze weg in een nieuwe variabele. Daarna wordt voor elke reducer key gekeken als de corresponderende value een functie is. Als dit zo is, dan wordt deze reducer weggeschreven in een nieuwe lijst variabele.   
+
+Deze functie retourneert dan opnieuw een functie 'combination'. In de scope van deze functie zitten onderandere twee lijsten. Een lijst voor de finale reducer keys en een lijst voor de finale reducers. 
+ 
+Omdat deze na combinatie in de scope van de functie zitten, is het onmogelijk om na een eerste combinatie een tweede combinatie uit te voeren. Dit zorgt er dus voor dat eenmaal er een root reducer gecombineerd is, deze niet opnieuw kan gebruikt worden om nog eens te combineren met een andere root reducer. Om hier verder op in te spelen werd naar een tweede methode gezocht. 
+
+\subsection{object export}
+Als tweede methode werd geprobeerd om geen rechtstreeks gebruik te maken van de root reducer van Scratch, maar om alle reducers te combineren in een groot object en dan dat object exporteren. Om deze methode mogelijk te maken moet de root reducer van het hoofdproject ook een object zijn en geen gecombineerde functie. Anders keert het probleem van de function scope terug. Met beide root reducers als object is het wel mogelijk om een gecombineerde root reducer af te leveren. De lijsten van de reducer keys en reducers bevatten dan de keys en reducers van beide projecten. Hierdoor wordt dus de volledige functionaliteit omvat van beide projecten.
+
+\subsubsection{Nadelen}
+Een eerste nadeel van deze methode is dat er dan ook met de root reducer van het hoofdproject rekening moet gehouden worden. Deze mag dan namelijk ook niet gecombineerd zijn. Om deze methode uit te voeren was er een gedeeltelijke herstructurering nodig, waardoor deze methode eigenlijk al niet meer optimaal is. 
+
+Een tweede nadeel zijn de veranderingen in het Scratch project. Stel dat er een reducer bijkomt of verwijderd wordt, dan moet dit altijd manueel aangepast worden vooraleer er terug een werkende versie geproduceerd wordt. Indien er enkel nood is aan de root reducer die geëxporteerd wordt, dan zou dit geen probleem zijn aangezien deze veranderingen mee opgenomen worden in de combinatie van de root reducer. Door elke reducer afzonderlijk in een nieuw object te steken en zo te exporteren wordt er heel wat extra onderhoudswerk gecreeërd voor deze package.  
+
 

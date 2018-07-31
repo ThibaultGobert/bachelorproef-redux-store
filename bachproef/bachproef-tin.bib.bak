@@ -1,3 +1,4 @@
+% Encoding: UTF-8
 @book{Knuth1998,
  author = {Knuth, Donald E.},
  title = {The art of computer programming,  volume 3: (2nd ed.) sorting and searching},
@@ -24,3 +25,12 @@
   year = {2009}
 }
 
+@Misc{Pure01,
+  author = {Eric Elliott},
+  title  = {Master the JavaScript interview: What is a pure function?},
+  year   = {2016},
+  date   = {2016-03-26},
+  url    = {https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
