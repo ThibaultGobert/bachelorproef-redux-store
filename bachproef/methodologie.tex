@@ -12,7 +12,12 @@
 %% onderzoeksvraag.
 
 \section{Analyse}
-Eerst werd een denk-analyse uitgevoerd om te achterhalen welke methodes er waren om de twee projecten met elkaar te laten communiceren. Om deze analyse uit te voeren werd gebruik gemaakt van de store van het hoofdproject. Daarna werden een reeks methodes uitgeprobeerd om te zien wat wel werkte en wat niet.
+Eerst werd een denk-analyse uitgevoerd om te achterhalen welke manieren er waren om de twee projecten met elkaar te laten communiceren.
+
+Aangezien er aanpassingen moesten gebeuren aan het Scratch project omdat een rechtstreekse import niet werkte door het gebrek aan functionaliteit, werd geopteerd voor een nieuwe versie van het Scratch project te maken en deze te publiceren op npm. 
+
+Om deze analyse verder uit te voeren werd gekeken naar wat de store van het hoofdproject nodig had als parameters. Daarna werden een reeks methodes uitgeprobeerd om te zien wat wel werkte en wat niet.
+
 
 \section{Methodes}
 \subsection{combineReducers}
@@ -32,4 +37,8 @@ Een eerste nadeel van deze methode is dat er dan ook met de root reducer van het
 
 Een tweede nadeel zijn de veranderingen in het Scratch project. Stel dat er een reducer bijkomt of verwijderd wordt, dan moet dit altijd manueel aangepast worden vooraleer er terug een werkende versie geproduceerd wordt. Indien er enkel nood is aan de root reducer die geëxporteerd wordt, dan zou dit geen probleem zijn aangezien deze veranderingen mee opgenomen worden in de combinatie van de root reducer. Door elke reducer afzonderlijk in een nieuw object te steken en zo te exporteren wordt er heel wat extra onderhoudswerk gecreeërd voor deze package.  
 
+Een derde nadeel zijn de configuraties en dependencies die nodig zijn om het Scratch project te laten draaien. 
+Elke dependency die gebruikt wordt, moet ook mee overgenomen worden in de package.json van het hoofdproject. Dit zorgt er ook voor dat de configuraties van webpack ook moeten meegenomen worden. Om dit te realiseren werd een nieuwe package gemaakt van de bestaande react-scripts package met de uitbreidingen die nodig zijn om een succesvolle integratie te verkrijgen.
 
+\subsection{Eigen methode}
+Als laatste methode werd gezocht naar een alternatief voor het vele onderhoudswerk die zich voordoet bij een object export. De bedoeling van deze extensie zou als het ware een uncombineReducers methode zijn. Op deze manier kan snel alles los gemaakt worden van elkaar om dan later opnieuw te kunnen combineren. 
