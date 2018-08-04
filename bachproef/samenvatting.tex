@@ -39,12 +39,11 @@
 
 In dit onderzoek worden twee React-Redux projecten opgesteld. React maakt gebruik van JavaScript voor het bouwen van user interfaces, waar Redux een concept is voor data storage en communicatie binnen de applicatie. Redux functioneert als een state container voor JavaScript apps. Een store is een concept van Redux die de hele state tree van de applicatie vasthoudt.
 
-Het probleem situeert zich het samenvoegen van twee React-Redux projecten. Deze hebben beide een store die de overeenkomstige state tree bevat. Er kan dus niet rechtstreeks een component geïmporteerd worden van het ene project naar het andere, omdat het daar geen bekende state zal hebben en er zo geen acties op kunnen uitgevoerd worden.
+Het probleem situeert zich in het samenvoegen van twee React-Redux projecten. Deze hebben beide een store die de overeenkomstige state tree bevat. Er kan dus niet rechtstreeks een component geïmporteerd worden van het ene project naar het andere, omdat het daar geen bekende state zal hebben en er zo geen acties op kunnen uitgevoerd worden.
 
-De bekende oplossing voor een soortgelijk probleem is het kopiëren van de reducers van het tweede project en deze plaatsen in het eerste project. [TODO-REFERENTIE HIER]
-Deze oplossing heeft echter een groot nadeel: als de reducers van het open source project gewijzigd worden of als er reducers worden toegevoegd/verwijderd, dan zullen deze ook opnieuw gekopieerd moeten worden in het eerste project. 
+Tot dusver is er nog geen bekende manier om de combinatie van een root reducer ongedaan te maken en opnieuw te combineren met de reducers van alle projecten samen. Dit zou wel nodig zijn om een lineaire state tree te behouden en geen geneste state tree met meerdere gecombineerde reducers.
 
 Om het probleem te reproduceren worden dus twee React-Redux projecten opgesteld. Het eerste project is het hoofdproject  met een basis inlog functionaliteit. Het tweede project is een fork van het bestaande open source project van Scratch. Om beide projecten met elkaar te laten communiceren zal het tweede project gepubliceerd worden op npm onder een eigen registry. Dit zorgt ervoor dat het project geïnstalleerd kan worden als dependency in het eerste project. Op deze manier kan een component snel geïmporteerd worden. 
 
-De bedoeling van dit onderzoek is om een manier te vinden waarbij geen extra aanpassingen moeten gebeuren aan het eerste project, maar enkel een geupdatete versie van het tweede project moet gepublished worden op npm.
+De bedoeling van dit onderzoek is om een manier te vinden waarbij geen extra aanpassingen moeten gebeuren aan het eerste project, maar enkel een geupdatete versie van het tweede project moet gepublished worden op npm. Er wordt gezocht naar een manier om een lineaire state tree te hebben voor alle reducers samen.
 Deze manier zal verkregen worden door een extensie te schrijven op Redux die de mogelijheid biedt om de functionaliteit van het tweede project te gebruiken in het eerste project. 

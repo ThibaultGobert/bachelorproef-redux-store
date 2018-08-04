@@ -20,7 +20,7 @@ Om deze analyse verder uit te voeren werd gekeken naar wat de store van het hoof
 
 
 \section{Methodes}
-\subsection{combineReducers}
+\subsection{Functie combineReducers}
 In de eerste methode werd geprobeerd om de root reducer van het scratch project rechtstreeks te integreren in de store van het hoofdproject. In de configuratie van de store wordt meegegeven wat de root reducer is en wat de initiële state van de applicatie is. De bedoeling was om een grote gecombineerde root reducer te maken om daarmee de store te initialiseren. Het enige wat hier aangepast werd aan de scratch-integration package was het exporteren van de root reducer in de index file.
 
 Twee root reducers met elkaar combineren via de methode \textit{combineReducers} gaat echter niet zomaar. Deze methode is een functie met als parameter de reducers die moeten gecombineerd worden. Zoals eerder vermeld bevat een reducer een key en een value. De parameter bevat dus een lijst van reducers met elk hun key en value. De functie \textit{combineReducers} overloopt deze lijst en vraagt eerst alle keys op en schrijft deze weg in een nieuwe variabele. Daarna wordt voor elke reducer key gekeken als de corresponderende value een functie is. Als dit zo is, dan wordt deze reducer weggeschreven in een nieuwe lijst variabele.   
@@ -29,7 +29,7 @@ Deze functie retourneert dan opnieuw een functie 'combination'. In de scope van 
  
 Omdat deze na combinatie in de scope van de functie zitten, is het onmogelijk om na een eerste combinatie een tweede combinatie uit te voeren. Dit zorgt er dus voor dat eenmaal er een root reducer gecombineerd is, deze niet opnieuw kan gebruikt worden om nog eens te combineren met een andere root reducer. Om hier verder op in te spelen werd naar een tweede methode gezocht. 
 
-\subsection{object export}
+\subsection{Object export}
 Als tweede methode werd geprobeerd om geen rechtstreeks gebruik te maken van de root reducer van Scratch, maar om alle reducers te combineren in een groot object en dan dat object exporteren. Om deze methode mogelijk te maken moet de root reducer van het hoofdproject ook een object zijn en geen gecombineerde functie. Anders keert het probleem van de function scope terug. Met beide root reducers als object is het wel mogelijk om een gecombineerde root reducer af te leveren. De lijsten van de reducer keys en reducers bevatten dan de keys en reducers van beide projecten. Hierdoor wordt dus de volledige functionaliteit omvat van beide projecten.
 
 \subsubsection{Nadelen}
@@ -41,4 +41,11 @@ Een derde nadeel zijn de configuraties en dependencies die nodig zijn om het Scr
 Elke dependency die gebruikt wordt, moet ook mee overgenomen worden in de package.json van het hoofdproject. Dit zorgt er ook voor dat de configuraties van webpack ook moeten meegenomen worden. Om dit te realiseren werd een nieuwe package gemaakt van de bestaande react-scripts package met de uitbreidingen die nodig zijn om een succesvolle integratie te verkrijgen.
 
 \subsection{Eigen methode}
-Als laatste methode werd gezocht naar een alternatief voor het vele onderhoudswerk die zich voordoet bij een object export. De bedoeling van deze extensie zou als het ware een uncombineReducers methode zijn. Op deze manier kan snel alles los gemaakt worden van elkaar om dan later opnieuw te kunnen combineren. 
+Als laatste methode werd gezocht naar een alternatief voor het vele onderhoudswerk die zich voordoet bij een object export. De bedoeling van deze extensie zou als het ware een uncombineReducers methode zijn. Op deze manier kan snel alles los gemaakt worden van elkaar om dan later opnieuw te kunnen combineren. Op deze manier kan een lineaire structuur verkregen worden. Momenteel is het niet mogelijk om van reeds gecombineerde root reducers een nieuwe reducer te combineren met een lineaire structuur in plaats van een geneste structuur. 
+
+\paragraph{Analyse}
+Om een extensie te schrijven is eerst een duidelijk inzicht nodig in de methode combineReducers. Hiervoor werd dus eerst een analyse gedaan van deze methode. 
+
+De methode neemt reducers als parameter
+
+
