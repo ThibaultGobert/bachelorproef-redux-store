@@ -46,6 +46,9 @@ Als laatste methode werd gezocht naar een alternatief voor het vele onderhoudswe
 \paragraph{Analyse}
 Om een extensie te schrijven is eerst een duidelijk inzicht nodig in de methode combineReducers. Hiervoor werd dus eerst een analyse gedaan van deze methode. 
 
-De methode neemt reducers als parameter
+De methode neemt reducers als parameter. Er worden eerst twee lokale variabelen gemaakt, de reducerKeys met daarin de keys van de reducers die als parameter werden meegegeven en de finalReducers. Daarna wordt -zolang er reducerKeys zijn- de juiste reducer opgehaald aan de hand van zijn key en wordt er gekeken als het type een functie is of niet. Als het inderdaad een functie is dan zal deze worden opgeslaan in de finalReducers.
+
+Nu kan er een nieuwe variabele finalReducerKeys aangemaakt worden met daarin de keys van de finalReducers.
+
 
 

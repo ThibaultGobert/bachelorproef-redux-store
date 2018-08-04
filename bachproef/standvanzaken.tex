@@ -6,7 +6,7 @@
 % bijzonder aan wat de link is met het vorige en volgende hoofdstuk.
 
 % Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
-\paragraph{inleiding}
+\paragraph{Inleiding}
 Zoals eerder vermeld wordt er gebruik gemaakt van twee React-Redux projecten. In dit hoofdstuk wordt meer informatie gegeven omtrent de achtergrond van deze projecten en wat er nodig is om deze met elkaar te laten communiceren.
 
 \section{React}
@@ -44,7 +44,7 @@ FIGUUR 2
 \paragraph{Initialisatie}
 In deze fase worden de initiële state en de default props ingesteld. De initiële state wordt in de constructor ingesteld, deze kan later altijd veranderd worden door de \textit{setState} methode. \textit{defaultProps} is een property van \textit{Component} die overschreven kan worden met nieuwe waarden voor de props. 
 
-\paragraph{mounten}
+\paragraph{Mounten}
 In de tweede fase zijn er een aantal \textit{hook} methodes die aangeropen kunnen worden voor het mounten en na het mounten. Een hook methode is een methode waar je kan inpikken in de lifecycle en bestaande code kan veranderen of verbeteren naar eigen noden. 
 
 Al de dingen die moeten gebeuren voor een component gaat mounten, moeten gedefinieerd zijn in de \textit{componentWillMount}. Deze methode wordt een keer per lifecycle uitgevoerd voor de eerste \textit{render}. 
@@ -53,10 +53,10 @@ Render zal de component mounten in de browser. Het is een pure methode, dus het 
 
 Na deze eerste render, wordt de methode \textit{componentDidMount} aangeropen. Deze methode wordt opnieuw een keer per lifecycle uitgevoerd. 
 
-\paragraph{updaten}
-Deze derde fase start wanneer de React component succesvol gerenderd is op de browser. De component kan nu upgedate worden op twee manieren: het verzenden van nieuwe props of het updaten van de state. 
+\paragraph{Updaten}
+Deze derde fase start wanneer de React component succesvol gerenderd is op de browser. De component kan nu geüpdatet worden op twee manieren: het verzenden van nieuwe props of het updaten van de state. 
 
-Wanneer de component nieuwe props ontvangt of de state is upgedate, wordt in de methode \textit{shouldComponentUpdate} gevraagd of er een re-render moet gebeuren of niet. Deze methode retourneert dus een boolean en zal standaard re-renderen tenzij anders beschreven. Het is dus mogelijk om enkel een re-render uit te voeren als de props veranderen. Deze hook methode wordt vooral gebruikt als renderen een zware methode is. Dan is het niet voordelig om altijd alles opnieuw te renderen.
+Wanneer de component nieuwe props ontvangt of de state is geüpdatet, wordt in de methode \textit{shouldComponentUpdate} gevraagd of er een re-render moet gebeuren of niet. Deze methode retourneert dus een boolean en zal standaard re-renderen tenzij anders beschreven. Het is dus mogelijk om enkel een re-render uit te voeren als de props veranderen. Deze hook methode wordt vooral gebruikt als renderen een zware methode is. Dan is het niet voordelig om altijd alles opnieuw te renderen.
 
 Als de uitkomst van deze methode true is, dan zal de component updaten en wordt de hook methode \textit{componentWillUpdate} opgeropen. In deze methode worden de nodige voorbereidingen gedaan voor de volgende render, gelijkaardig als \textit{componentWillMount}. Hierna wordt de component dus opnieuw gerenderd. 
 
@@ -64,11 +64,11 @@ Wanneer dit succesvol is dan zal \textit{componentDidUpdate} de third party libr
 
 Wanneer echter de props veranderen en het is niet de eerste render dan zal in \textit{componentWillReceiveProps} de state en de props opnieuw gesynchroniseerd worden met elkaar. 
 
-\paragraph{unmounten}
+\paragraph{Unmounten}
 In de laatste fase is de component niet meer nodig en zal deze via \textit{componentWillUnmount} verwijderd worden. Hier kan er dan een cleanup gebeuren wat betreft user details en authorization tokens.
 
 \section{Redux}
-Door stateful components die elkaar aanroepen verhoogt de complexiteit om de state te beheren. Om tegen te gaan dat de controle verloren gaat over wanneer, hoe en waarom de state upgedate wordt, kan redux geïntroduceerd worden als oplossing om de state te managen. Redux zal eigenlijk proberen om de veranderingen op de state voorspelbaar te maken door bepaalde restricties op te leggen omtrent het updaten van de state. Deze restricties staan beschreven in de \textit{drie principes} van Redux.
+Door stateful components die elkaar aanroepen verhoogt de complexiteit om de state te beheren. Om tegen te gaan dat de controle verloren gaat over wanneer, hoe en waarom de state geüpdatet wordt, kan redux geïntroduceerd worden als oplossing om de state te managen. Redux zal eigenlijk proberen om de veranderingen op de state voorspelbaar te maken door bepaalde restricties op te leggen omtrent het updaten van de state. Deze restricties staan beschreven in de \textit{drie principes} van Redux.
 
 \subsection{Drie principes}
 
@@ -123,12 +123,12 @@ In de vorige paragrafen werden actions en reducers gedefinieerd. Actions werden 
 \begin{itemize}
 	\item het vasthouden van de state van de applicatie
 	\item toegang geven tot de state
-	\item toelaten dat de state upgedate kan worden door een action te dispatchen
+	\item toelaten dat de state geüpdatet kan worden door een action te dispatchen
 	\item listeners registreren via subscribe
 	\item listeners unsubscriben via de functie geretourneerd door subscribe
 \end{itemize}
 
-Het laatste punt laat toe om een callback te registreren (subscribe) die de redux store zal aanroepen elke keer een actie wordt gedispatched. Op deze manier kan de UI van de applicatie upgedate worden naargelang de state van de applicatie. 
+Het laatste punt laat toe om een callback te registreren (subscribe) die de redux store zal aanroepen elke keer een actie wordt gedispatched. Op deze manier kan de UI van de applicatie geüpdatet worden naargelang de state van de applicatie. 
 
 Het is belangrijk om te noteren dat er maar een store in de Redux applicatie is. Wanneer er logica moet gesplitst worden, is het beter om reducer compositie te gebruiken om later te combineren dan om meerdere stores te implementeren. Om deze reden wordt in dit onderzoek ook geopteerd om een extensie te schrijven op combineReducers van Redux in plaats van meerdere stores te implementeren.
 
