@@ -48,7 +48,15 @@ Om een extensie te schrijven is eerst een duidelijk inzicht nodig in de methode 
 
 De methode neemt reducers als parameter. Er worden eerst twee lokale variabelen gemaakt, de reducerKeys met daarin de keys van de reducers die als parameter werden meegegeven en de finalReducers. Daarna wordt -zolang er reducerKeys zijn- de juiste reducer opgehaald aan de hand van zijn key en wordt er gekeken als het type een functie is of niet. Als het inderdaad een functie is dan zal deze worden opgeslaan in de finalReducers.
 
-Nu kan er een nieuwe variabele finalReducerKeys aangemaakt worden met daarin de keys van de finalReducers.
+Nu kan er een nieuwe variabele finalReducerKeys aangemaakt worden met daarin de keys van de finalReducers. Daarna wordt er een functie geretourneerd met dezelfde syntax als de reducer (state en action). Er wordt opnieuw per key overlopen, deze keer om een object te verkrijgen via \textit{reduce} aan de hand van de state voor deze key.
+
+\paragraph{Werkwijze}
+
+Er werd getracht om van een root reducer, die reeds gecombineerd is, de reducer keys aan te spreken van zijn onderliggende reducers. Dit bleek echter niet mogelijk omdat deze vastzitten in de function scope van combineReducers. Indien dit mogelijk was, kon op deze manier een lineaire combinatie gemaakt worden van meerdere root reducers.
+
+
+ 
+
 
 
 
