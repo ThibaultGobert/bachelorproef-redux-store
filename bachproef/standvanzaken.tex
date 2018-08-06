@@ -14,11 +14,11 @@ Volgens \autocite{React01} is React een JavaScript library om user interfaces te
 
 \subsection{JSX}
 JSX is een XML/HTML-achtige syntax gebruikt door React die ECMAScript uitbreidt zodat XML/HTML-achtige text kan bestaan met JavaScript/React code. Deze syntax is bedoeld om gebruikt te worden door preprocessoren (zoals Babel) om HTML text gevonden in JavaScript files om te zetten in standaard JavaScript objecten. Dit wil dus zeggen dat je door JSX te gebruiken HTML structuren en JavaScript code kan schrijven in dezelfde file, Babel zal dan alle uitdrukkingen vertalen naar JavaScript code. Waar vroeger dus JavaScript code in HTML werd geplaatst, laat JSX het toe om HTML in JavaScript te plaatsen.
-(TODO REF JSX)
+\autocite{jsx}
 
 \subsection{Components}
 Een enkele view van een user interface is opgedeeld in een aantal stukken, in een aantal components. De start component bevat een tree, die tree kan opgedeeld worden in een aantal sub-componenten. Deze kunnen dan weer opgedeeld worden in nog meer sub-componenten. Dit kan dus resulteren in een complexe tree met verschillende React componenten. Er zijn echter ook nog verschillende soorten components, namelijk \textit{simple} en \textit{stateful}. 
-(TODO REF JSX ZELFDE)
+\autocite{jsx}
 
 \paragraph{Simple component}
 React components implementeren de \textit{render} methode, ze retourneren wat er moet afgebeeld worden. Daarvoor wordt het eerder aangekaarte JSX gebruikt. Input data die doorgegeven is aan de component kan worden opgeroepen door de \textit{props} aan te spreken van deze component. Sidenote: JSX is optioneel, het gewenste resultaat kan ook bereikt worden door JavaScript code alleen. JSX maakt het wel overzichtelijker om de props aan te spreken.  
@@ -31,15 +31,13 @@ In toevoeging met data als input nemen (via \textit{props}), kan een component z
 
 \subsection{React lifecycle}
 Met React is het mogelijk om components te creëren door de voorziene methode van React te gebruiken. Deze methode verwacht een \textit{render} methode en zal een lifecycle triggeren, de lifecycle van een component. 
-Deze lifecycle kan onderverdeeld worden in 4 grote fasen:
+Deze lifecycle kan onderverdeeld worden in 4 grote fasen zoals beschreven in figuur 1 en 2:
 \begin{itemize}
 	\item initialisatie
 	\item mounten
 	\item updaten
 	\item unmounten
 \end{itemize}
-
-FIGUUR 2
 
 \paragraph{Initialisatie}
 In deze fase worden de initiële state en de default props ingesteld. De initiële state wordt in de constructor ingesteld, deze kan later altijd veranderd worden door de \textit{setState} methode. \textit{defaultProps} is een property van \textit{Component} die overschreven kan worden met nieuwe waarden voor de props. 
@@ -66,6 +64,9 @@ Wanneer echter de props veranderen en het is niet de eerste render dan zal in \t
 
 \paragraph{Unmounten}
 In de laatste fase is de component niet meer nodig en zal deze via \textit{componentWillUnmount} verwijderd worden. Hier kan er dan een cleanup gebeuren wat betreft user details en authorization tokens.
+\autocite{reactlifecycle}
+\autocite{reactlifecycle2}
+
 
 \section{Redux}
 Door stateful components die elkaar aanroepen verhoogt de complexiteit om de state te beheren. Om tegen te gaan dat de controle verloren gaat over wanneer, hoe en waarom de state geüpdatet wordt, kan redux geïntroduceerd worden als oplossing om de state te managen. Redux zal eigenlijk proberen om de veranderingen op de state voorspelbaar te maken door bepaalde restricties op te leggen omtrent het updaten van de state. Deze restricties staan beschreven in de \textit{drie principes} van Redux.
@@ -83,6 +84,7 @@ Om te specificeren hoe de state tree veranderd is ten gevolge van actions, worde
 
 \subparagraph{Pure functie}
 Een pure functie is een functie die met dezelfde input altijd dezelfde output produceert.
+\autocite{Pure01}
 
 Redux draait nu net om de voorspelbaarheid en betrouwbaarheid. Door een mutatie kan deze state niet meer voorspelbaar of betrouwbaar zijn. 
 
@@ -103,6 +105,7 @@ De data lifecycle voor om het eender welke Redux app volgt 4 stappen:
 \subparagraph{Actions}
 Een action is een object die beschrijft wat er gebeurt.
 Deze actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Acties zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan de duiden welke action uitgevoerd wordt. Deze types zijn string constanten die in grote applicaties in een aparte module worden opgeslaan om overzichtelijk te houden. 
+\autocite{actions}
 
 \subparagraph{Reducers}
 Reducers specificeren hoe de state van de applicatie zal veranderen ten gevolge van een action die gedispatched wordt naar de store. Waar actions beschrijven dat er iets gebeurd is, beschrijven ze niet hoe de state van de applicatie veranderd is. Een reducer is een pure functie -zie vorige subparagraaf- die de vorige state van de applicatie en een action neemt en daaruit een nieuwe state zal retourneren. 
@@ -113,6 +116,7 @@ Elk van de reducers is zijn deel van de globale state aan het beheren. De \texti
 Op deze manier kunnen reducers gesplitst worden in aparte files om zo compleet onafhankelijk verschillende data domeinen te laten beheren door verschillende reducers. 
 
 Om deze reducers dan te combineren voor de volledige functionaliteit van het databeheer te hebben, wordt er gebruik gemaakt van de functie \textit{combineReducers}. Deze functie voert boilerplate logica uit om de reducers op te roepen aan de hand van hun keys en om de resultaten hiervan te combineren in een enkel object. 
+\autocite{reducers}
 
 \subparagraph{boilerplate code}
 korte tekst die zonder veel aanpassingen kan worden hergebruikt
@@ -134,7 +138,8 @@ Het is belangrijk om te noteren dat er maar een store in de Redux applicatie is.
 
 Om een store te creëren hebben we een reducer nodig. In een vorige paragraaf werd de methode combineReducers uitgelegd om meerdere reducers te combineren in een reducer. Deze gecombineerde reducer kan geïmporteerd worden en meegegeven worden als parameter aan de methode createStore om een store te creëren.
 
-Als er dan gekeken wordt naar de data flow dan worden er eerst actions gedispatched naar de store. De Redux store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action die gedispatched werd. Deze zal altijd dezelfde output hebben en dus voorspelbaar zijn aangezien reducers pure functies zijn.	 Hierna zal de root reducer de output van meerdere reducers combineren in een enkele state tree. Dit gebeurt met de functie combineReducers die de verschillende functies voor een bepaald deel van de state zal combineren. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
+Als er dan gekeken wordt naar de data flow dan worden er eerst actions gedispatched naar de store. De Redux store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action die gedispatched werd. Deze zal altijd dezelfde output hebben en dus voorspelbaar zijn aangezien reducers pure functies zijn. Hierna zal de root reducer de output van meerdere reducers combineren in een enkele state tree. Dit gebeurt met de functie combineReducers die de verschillende functies voor een bepaald deel van de state zal combineren. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
+\autocite{Redux02}
 
 Een manier om deze flow te controleren of te debuggen is via de redux-devtools extension voor chrome. 
 
@@ -142,28 +147,29 @@ Een manier om deze flow te controleren of te debuggen is via de redux-devtools e
 redux devtools extension wordt gebruikt voor het debuggen van veranderingen in de state van de applicatie. Met deze extension kan dus gekeken worden naar de volledige tree alsook naar de actions die verzonden worden. Er kan dan gekozen worden om bepaalde actions uit te voeren of te pauzeren tijdens een aantal actions. Dit zorgt dus voor een preciezere debugging. Vooraleer van deze extension gebruik kan gemaakt worden moet deze extension eerst gedefinieerd worden in de store. Deze wordt toegevoegd als \textit{enhancer}. 
 
 \subparagraph{Enhancer}
-Een verbetering die ergens aan toegevoegd kan worden, in dit voorbeeld is het de redux devtools extension toevoegen aan de store om een extra debugging tool aan te bieden.
+Een verbetering die ergens aan toegevoegd kan worden, in figuur 3 is het de redux devtools extension die toegevoegd wordt aan de store om een extra debugging tool aan te bieden.
 
 Enkel het hoofdproject wordt geconnecteerd met de redux-devtools extension. Wanneer dus gekeken wordt naar de state tree, dan is dit deze van het hoofdproject. Wanneer er dus meerdere projecten met elkaar gecombineerd worden, zal er nog steeds enkel de state tree van de hoofdapplicatie staan. Het zou dus een absolute meerwaarde zijn om ook deze debug tool te kunnen gebruiken met de gecombineerde state tree van beide projecten.
+\autocite{devtools}
 
 \subparagraph{Connectie met React}
-React bindings zitten echter niet standaard in Redux, eerst moet de npm-package react-redux worden geïnstalleerd. Om React en Redux samen te laten functioneren wordt gebruik gemaakt van een opsplitsing in presentationele en container components. 
-ZIE FIGUUR 1
+React bindings zitten echter niet standaard in Redux, eerst moet de npm-package react-redux worden geïnstalleerd. Om React en Redux samen te laten functioneren wordt gebruik gemaakt van een opsplitsing in presentationele en container components. (zie figuur 4) 
 
 Presentationele components zijn -zoals de naam aangeeft- prioritair voor de visualisatie. Ze verkrijgen enkel data via de props en sturen geen actions aan. 
 
 Daar waar presentationele components gericht zijn op de visualisatie, zijn de container components gericht op het functionele aspect. Ze voorzien andere container (of presentationele) components van data en gedrag. Deze components gaan ook actions aanroepen om aan te duiden dat de data moet veranderen.  
+\autocite{prescon}
+\autocite{prescon2}
 
 
 \subparagraph{Containers}
-Het idee achter containers is dat ze de data gaan ophalen en dan de corresponderende sub-component gaan renderen. Deze data wordt gehaald uit de state en omgezet naar props voor die container. Daarna krijgen de sub-componenten de juiste props mee om hun data te renderen. r
+Het idee achter containers is dat ze de data gaan ophalen en dan de corresponderende sub-component gaan renderen. Deze data wordt gehaald uit de state en omgezet naar props voor die container. Daarna krijgen de sub-componenten de juiste props mee om hun data te renderen. 
+\autocite{containercomp}
 
 
 
 \subsection{Npm}
 Om de twee projecten met elkaar te laten communiceren, wordt gebruik gemaakt van npm. De extensie op Redux zal geschreven worden en onder een eigen package gepubliceerd worden op npm, op deze manier kan de geschreven extensie aangesproken worden. 
-(eigen)
-
 
 npm is 's werelds grootste software register met ongeveer 3 biljoen downloads per week. Het register bevat meer dan 600.000 packages. Open source developers van elk continent gebruiken npm voor het delen en lenen van packages. Veel organisaties gebruiken npm ook voor privaat development, zoals in dit onderzoek ook het geval is. 
 
@@ -175,7 +181,7 @@ npm bestaat uit 3 verschillende componenten.
 \end{itemize}
 
 De website wordt gebruikt om verschillende packages te zoeken en zelf packages op te publiceren, privaat of publiek. Deze publicatie kan via de CLI gedaan worden
-(NPM REF)
 
 De grootste reden om npm te gebruiken is om bestaande packages aan te passen en te specialiseren naar eigen apps. Natuurlijk kan ook gebruik gemaakt worden van bestaande custom packages van andere gebruikers.
+\autocite{npm}
  

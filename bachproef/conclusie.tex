@@ -12,5 +12,27 @@
 %% niet duidelijk zijn? Heeft het onderzoek geleid tot nieuwe vragen die
 %% uitnodigen tot verder onderzoek?
 
-\lipsum[76-80]
+\section{Inleiding}
+Redux is een framework die nog maar 3 jaar bestaat. Er is wel al veel documentatie beschikbaar en veel problemen zijn reeds ontdekt en opgelost, maar zeker niet alles staat beschreven. 
 
+Bijvoorbeeld hoe 2 React-Redux projecten met elkaar kunnen interageren staat nergens beschreven. Omdat hier geen best practices vermeld werden, is de keuze gemaakt om via npm packages te werken. Op deze manier kan het ene project snel geïntegreerd worden in het andere. 
+
+Het was echter niet voldoende om deze package gewoon te installeren. Wanneer dan een component werd aangeropen zou de state niet volledig zijn. De state bevat dan enkel objecten van het hoofdproject en niet van het geïntegreerde project. Om deze reden moeten de reducers geëxporteerd worden uit het geïntegreerde project. 
+
+\section{Performantie}
+Zoals eerder vermeld was de oplossing om deze reducers in een object te steken en dit te exporteren. Het grootste probleem hierbij is dat veranderingen in het project dat geïntegreerd moet worden grote gevolgen kan hebben. Dit werd ondervonden door het open source project van Scratch. Na een update van Scratch uit en de bijhorende update om de package up to date te houden werkte deze niet meer. Dit kwam door een verandering in de structuur van de reducers, waardoor het niet meer de juiste reducers waren die geëxporteerd werden. Dit zorgt er dus voor dat er zeer aandachtig moet gebleven worden bij updates. Om deze reden zou er nood zijn aan een methode uncombineReducers of een alternatief waardoor er enkel met de root reducer rekening zou gehouden moeten worden. Dan zouden externe updates geen grote impact meer hebben en kan deze snel terug geïntegreerd worden.
+
+Deze methode is niet optimaal, aangezien er heel wat onderhoudswerk bij komt kijken om de package up to date te houden. Een bijkomend probleem is dat met deze methode ook alle dependencies moeten overgenomen worden alsook de webpack configuraties. 
+
+Deze methode wordt al een heel stuk performanter door het te integreren project te combineren in webpack, op deze manier is het niet meer nodig om alle dependencies toe te voegen aan het hoofdproject en wordt de package voor de webpack configuraties overbodig. 
+
+Zoals eerder gezegd is deze methode afhankelijk van de veranderingen in het te integreren project. Als hier quasi geen veranderingen in moeten gebeuren zal dit geen grote impact hebben, als er constant veranderingen in gebeuren dan zal deze methode niet meer optimaal zijn. 
+
+
+\section{Eindconclusie}
+Dit onderzoek is nog niet klaar, de basis is wel gelegd om verder onderzoek te doen naar een methode om de root reducers van beide projecten met elkaar te combineren zonder dat daar veel extra onderhoud aan te pas komt. Als uitkomst was wel verwacht dat er een soort uncombineReducers zou gemaakt worden, helaas was dit niet mogelijk door de implementatie van deze functie. Er is wel een alternatief gevonden om toch het probleem op te lossen. 
+
+Achteraf gezien bleek het een goede keuze om voor het Scratch open source project te kiezen. Dit is een project dat nog steeds in development is en dat nu overschakelt op JavaScript, waardoor het zeer interessant wordt om dit te kunnen integreren in een eigen applicatie. 
+
+Dit is een belangrijk onderzoek omdat er nog geen soortgelijke onderzoeken zijn gedaan of gedocumenteerd werden.
+Er zijn een aantal statistieken gevonden die duidelijk maken dat het een probleemstelling is die uitnodigt tot verder onderzoek. De npm package die de reducer exports verzorgde is opgericht eind februari. Dan werd gezocht naar hoe het mogelijk wordt om dit project snel integreerbaar te maken, waar tot een tijdelijke oplossing is gekomen begin maart. Deze package werd sinds dan ruim 7000 keer gedownload (figuur 9) met piekmomenten van 2168 downloads per week (figuur 8) en 946 downloads per dag (figuur 7) in maart. Door tijdsgebrek was het echter onmogelijk om deze package constant up to date te houden. Eind maart kan er nog een update gezien worden door het stijgende aantal downloads, wat duidt op het feit dat er wel vraag naar is.
