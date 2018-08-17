@@ -86,7 +86,7 @@
 }
 
 @Misc{devtools,
-  author    = {zalmoxisus},
+  author    = {Zalmoxisus},
   year      = {2015},
   timestamp = {2018-08-03},
   url       = {https://github.com/reduxjs/redux-devtools},

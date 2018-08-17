@@ -28,6 +28,13 @@ Deze methode wordt al een heel stuk performanter door het te integreren project 
 
 Zoals eerder gezegd is deze methode afhankelijk van de veranderingen in het te integreren project. Als hier quasi geen veranderingen in moeten gebeuren zal dit geen grote impact hebben, als er constant veranderingen in gebeuren dan zal deze methode niet meer optimaal zijn. 
 
+\section{Complexiteit}
+Er zijn een aantal objectieve maatstaven die ontwikkeld zijn voor de complexiteit van software te meten. In grote lijnen kan men deze maatstaven verdelen in maten voor complexiteit die zijn gerelateerd aan de omvang van een software-programma, en in maten voor complexiteit die zijn gerelateerd aan de structuur van zo'n programma. De simpelste maat voor de omvang is het aantal regels programmacode: hoe meer regels, hoe groter de complexiteit. Een ernstig nadeel van deze simpele metriek is dat men het verschil in uitdrukkingskracht van de verschillende programmeertalen volledig verwaarloost.
+
+Men maakt ook geen onderscheid naar soorten regels code. Er zijn echter eenvoudige regels code en er zijn complex samengestelde regels programmacode. Om hieraan tegemoet te komen, heeft Halstead een meer verfijnde metriek ontwikkeld. In zijn theorie is de complexiteit en de daarmee samenhangende programmeerinspanning afhankelijk van de omvang van een programma en van het niveau van structurering. Hoe groter de omvang, hoe hoger de programmeerinspanning. hoe hoger (compacter) het niveau van structurering, hoe lager de inspanning. Zowel omvang als niveau van structurering zijn functies van het aantal verschillende operatoren en operanden in een programma.
+\autocite{complexiteit01}
+
+
 
 \section{Eindconclusie}
 Dit onderzoek is nog niet klaar, de basis is wel gelegd om verder onderzoek te doen naar een methode om de root reducers van beide projecten met elkaar te combineren zonder dat daar veel extra onderhoud aan te pas komt. Als uitkomst was wel verwacht dat er een soort uncombineReducers zou gemaakt worden, helaas was dit niet mogelijk door de implementatie van deze functie. Er is wel een alternatief gevonden om toch het probleem op te lossen. 

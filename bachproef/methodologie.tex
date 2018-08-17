@@ -56,7 +56,7 @@ Een tweede nadeel zijn de veranderingen in het Scratch project. Stel dat er een 
 Een derde nadeel zijn de configuraties en dependencies die nodig zijn om het Scratch project te laten draaien. 
 Elke dependency die gebruikt wordt, moet ook mee overgenomen worden in de package.json van het hoofdproject. Dit zorgt er ook voor dat de configuraties van webpack ook moeten meegenomen worden. Om dit te realiseren werd een nieuwe package gemaakt van de bestaande react-scripts package met de uitbreidingen die nodig zijn om een succesvolle integratie te verkrijgen.
 
-door entry file aan te passen en webpack kan deze issue van react-scripts-codefever opgelost worden
+Dit derde nadeel kan echter wel opgelost worden. Via webpack is het mogelijk om de configuraties van Scratch te bundelen en weg te schrijven in een dist map om zo te exporteren als een library. In dit geval gaat het pas gebeuren wanneer de environment variabele op 'production' staat. Een tweede package op npm met de nodige configuraties voor beide projecten wordt overbodig wanneer deze oplossing gebruikt wordt in de package waar de reducers geëxporteerd worden. Dit bespaart onderhoudswerk en vermindert de complexiteit.
 
 
 

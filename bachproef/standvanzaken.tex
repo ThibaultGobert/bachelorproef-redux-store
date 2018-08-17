@@ -166,8 +166,6 @@ Daar waar presentationele components gericht zijn op de visualisatie, zijn de co
 Het idee achter containers is dat ze de data gaan ophalen en dan de corresponderende sub-component gaan renderen. Deze data wordt gehaald uit de state en omgezet naar props voor die container. Daarna krijgen de sub-componenten de juiste props mee om hun data te renderen. 
 \autocite{containercomp}
 
-
-
 \subsection{Npm}
 Om de twee projecten met elkaar te laten communiceren, wordt gebruik gemaakt van npm. De extensie op Redux zal geschreven worden en onder een eigen package gepubliceerd worden op npm, op deze manier kan de geschreven extensie aangesproken worden. 
 
@@ -178,10 +176,28 @@ npm bestaat uit 3 verschillende componenten.
 	\item de website
 	\item de Command Line Interface (CLI)
 	\item het register
+	
 \end{itemize}
 
 De website wordt gebruikt om verschillende packages te zoeken en zelf packages op te publiceren, privaat of publiek. Deze publicatie kan via de CLI gedaan worden
 
 De grootste reden om npm te gebruiken is om bestaande packages aan te passen en te specialiseren naar eigen apps. Natuurlijk kan ook gebruik gemaakt worden van bestaande custom packages van andere gebruikers.
 \autocite{npm}
- 
+
+\section{Webpack}
+De meeste React-Redux projecten maken gebruik van Webpack. Webpack heeft veel populariteit gewonnen door het gebruik in React. Webpack is een statische bundelaar van modules voor JavaScript applicaties. Het kleinste project die gebundeld kan worden met webpack bestaat uit een input en een output. Wanneer webpack bezig is met het verwerken van de applicatie, maakt het intern een \textit{dependency graph} aan. Deze wordt geconstrueerd door alle imports af te lopen. Het bundelen van modules begint bij de door gebruiker gedefinieerde entries.
+\begin{description}
+	\item[Een entry point] 
+	 gaat aanduiden welke module webpack het eerst moet beginnen builden vanuit zijn interne dependency graph. Webpack gaat dan kijken van welke andere modules en libraries dit entry point afhankelijk is (direct en indirect). 
+\end{description}
+
+Standaard is dit entry point de index file, maar deze kan uiteraard veranderd worden of er kunnen zelfs meerdere entry points toegevoegd worden. Samen met de entry point(s) wordt meestal ook de output property gedefinieerd. Via deze property weet webpack naar waar de bundels verzonden moeten worden en hoe deze moeten noemen. De standaardsetting hiervoor is de dist folder.
+
+In de meeste applicaties zitten er echter niet enkel JavaScript files. Soms worden image imports gedaan of wordt er via een url gewerkt. Webpack verstaat echter enkel JavaScript files. Om het mogelijk te maken om andere bestandtypes te converteren in geldige modules moeten loaders toegevoegd worden. Deze modules kunnen dan gebruikt worden door de applicatie en toegevoegd worden aan de dependency graph. 
+
+\begin{description}
+	\item[Een loader] heeft een \textit{test} en een \textit{use} property. De test property geeft weer welke file of files die er getransformeerd moeten worden. Een use property toont aan welke loader gebruikt moet worden voor deze transformatie.
+\end{description}
+
+Loaders worden gedefinieerd in de \textit{rules} property.
+Waar loaders worden gebruikt voor de transformatie van bepaalde modules, zorgen plugins ervoor dat de bundle geoptimaliseerd wordt. Plugins gaan altijd vooraf aan een require statement en kunnen later aangepast worden door extra opties toe te voegen. 
