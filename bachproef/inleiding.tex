@@ -8,21 +8,20 @@
 \section{Context}
 \label{sec:context}
 
-Zoals eerder vermeld, wordt gebruik gemaakt van twee React-Redux projecten. React is een JavaScript library voor het bouwen van user interfaces. React werkt met components. In de component schrijf je de gewenste code die moet gerenderd worden. Een component ontvangt parameters, genaamd \textit{props} en retourneert hiërarchische views die getoond worden door de render methode. Elke component kan onafhankelijk functioneren, wat het dus mogelijk maakt om verschillende components in een andere component in te laden. \autocite{React01} 
+React is een JavaScript library voor het bouwen van user interfaces. React werkt met components. In de component schrijf je de gewenste code die moet gerenderd worden. Een component ontvangt parameters, genaamd \textit{props} en retourneert hiërarchische views die getoond worden door de render methode. Elke component kan onafhankelijk functioneren, wat het dus mogelijk maakt om verschillende components in een andere component in te laden. \autocite{React01} 
 
 Redux is een state container voor JavaScript apps. Redux kan dus gebruikt worden samen met React of andere view libraries. 
-In Redux zijn er een aantal basis begrippen die moeten uitgelegd worden voor de verdere voortgang voor dit onderzoek, zoals: actions, reducers, store en containers. Deze begrippen vormen eigenlijk de omkadering van Redux. \autocite{Redux02}
+In Redux zijn er een aantal basis begrippen die moeten uitgelegd worden voor de verdere voortgang voor dit onderzoek, zoals: actions, reducers, store en containers. Deze begrippen vormen de omkadering van Redux. \autocite{Redux02}
 
 De Redux architectuur heeft een unidirectionele data, dit wil zeggen dat de data steeds dezelfde richting/flow aanneemt. Dit zorgt er voor dat de logica van de applicatie voorspelbaar wordt.  
 
-Een container component is een component die verantwoordelijk is voor het verkrijgen van data. Een container component gaat subscriben op de store, om zo een deel van de Redux state tree te kunnen lezen. Het gaat eigenlijk de nodige delen van de data nemen en doorgeven als \textit{props}. Een container component is ook verantwoordelijk voor het dispatchen van actions die veranderingen maken aan de state van de applicatie. 
+Een container component is een component die verantwoordelijk is voor het verkrijgen van data. Een container component gaat subscriben op de store, om zo een deel van de Redux state tree te kunnen lezen. Het gaat op deze manier de nodige delen van de data nemen en doorgeven als \textit{props}. Een container component is ook verantwoordelijk voor het dispatchen van actions die veranderingen maken aan de state van de applicatie. 
 
 Deze actions zijn payloads van informatie die data verzenden van de applicatie naar de store. Actions zijn tevens de enige soort van informatie voor de store. Het zijn JavaScript objecten die een \textit{type} property moeten hebben om aan te duiden welke actie uitgevoerd wordt. Deze types zijn string constanten die in een aparte module worden opgeslaan. 
 
 Als er dan gekeken wordt naar de data flow dan worden er eerst actions gedispatched naar de store. De store zal dan de corresponderende reducer aanroepen met twee argumenten, namelijk de huidige state en de action. Hierna zal de root reducer de output van meerdere reducers combineren in een single state tree. Daarna gaat de Redux store de volledige state tree die geretourneerd werd door de root reducer gaan opslaan. Hier kan de container dan data uit lezen en doorgeven aan een presentationele component.
 
 Reducers specificeren hoe de applicatie zijn state verandert ten gevolge van de actions die verzonden zijn naar de store. Actions beschrijven alleen maar het feit dat er iets gebeurd is, ze beschrijven niet hoe de applicatie zijn state verandert.
-Vooraleer er kan gezegd worden hoe een reducer dit doet, moet worden uitgelegd wat een pure functie is. Een pure functie is een functie die met dezelfde input altijd dezelfde output produceert. \autocite{Pure01}
 
 Een reducer is een pure functie die de vorige state en een actie neemt en daaruit de nieuwe state retourneert. Het is belangrijk dat de reducer puur blijft, een aantal zaken zijn een no-go zoals API-calls en niet-pure functies aanroepen. De uitkomst moet voorspelbaar blijven. Redux roept de reducer aan met een \textit{undefined} state voor de eerste keer. Daar moet de initial state van de applicatie worden ingesteld. \autocite{Redux02}
 
@@ -33,26 +32,26 @@ Actions representeren het feit dat er iets gebeurd is en reducers updaten de sta
 	\item toelaten om de state te updaten
 	\item registreren van listeners
 \end{itemize}
-Het laatste punt laat toe om een callback te registreren die de redux store zal aanroepen elke keer een action wordt gedispatched. Op deze manier kan de UI van de applicatie upgedate worden naargelang de state van de applicatie. 
+Het laatste punt laat toe om een callback te registreren die de Redux store zal aanroepen elke keer een action wordt gedispatched. Op deze manier kan de UI van de applicatie upgedate worden naargelang de state van de applicatie. 
 
 
 
 \section{Probleemstelling}
 \label{sec:probleemstelling}
 
-Het probleem ligt in het gebruiken van components uit een tweede React-Redux project. Door het importeren van een container component in het eerste project worden de actions die gedispatched worden door die component niet herkend in de store. Deze zitten namelijk in de store van het tweede project. Door de reducers te combineren van beide projecten in een grote root reducer wordt dit probleem opgelost. Dit is zo omdat de store dan de corresponderende reducer kan aanroepen naargelang de action die gedispatched wordt. Het probleem hierbij is dat de reducers van het tweede project gekopieerd zouden moeten worden in de root reducer van het eerste project. Dit resulteert in onstabiele code wanneer er reducers toegevoegd en/of verwijderd worden in het tweede project. Dit onderzoek heeft een meerwaarde voor bedrijven/personen die een React-Redux project hebben en functionaliteit (componenten) willen gebruiken uit een bestaande React-Redux repository. 
+Een van de problemen is het gebruiken van components uit een tweede React-Redux project. Door het importeren van een container component in het eerste project worden de actions die gedispatched worden door die component niet herkend in de store. Deze zitten namelijk in de store van het tweede project. Door de reducers te combineren van beide projecten in een grote root reducer wordt dit probleem opgelost. Dit is zo omdat de store dan de corresponderende reducer kan aanroepen naargelang de action die gedispatched wordt. Het probleem hierbij is dat de reducers van het tweede project gekopieerd zouden moeten worden in de root reducer van het eerste project. Dit resulteert in onstabiele code wanneer er reducers toegevoegd en/of verwijderd worden in het tweede project. Dit onderzoek heeft een meerwaarde voor bedrijven/personen die een React-Redux project hebben en functionaliteit (componenten) willen gebruiken uit een bestaande React-Redux repository. 
 
 
 \section{Onderzoeksvraag}
 \label{sec:onderzoeksvraag}
 
-Onderzoeksvraag:
+\textbf{Onderzoeksvraag}:
 \begin{itemize}
-	\item Hoe kan een tweede react-redux project geïntegreerd worden in een ander react-redux project?
-
+	\item Hoe kan de functionaliteit van een tweede React-Redux project geïntegreerd worden in een ander React-Redux project?
 \end{itemize}
+Er wordt getracht om een manier te vinden waarbij er specifieke functionaliteit uit het ene project kan genomen worden door een container te exporteren. Om deze container te laten werken zullen ook de reducers nodig zijn van dit project. 
 
-Deelonderzoeksvraag:
+\textbf{Dit zorgt voor de deelonderzoeksvraag}:
 \begin{itemize}
 	\item Hoe kunnen twee root reducers met elkaar gecombineerd worden?
 \end{itemize}
