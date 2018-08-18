@@ -41,14 +41,27 @@ Men kan nu deze metriek toepassen op het voorbeeld met de gemaakte package in de
 	\item Berekende lengte van het programma: $N_3$ = $n_1$ $log_{2}(n_1)$ + $n_2$ $log_{2}(n_2)$ = 4,7549 +  104,0419 = 108,7968.
 	\item Volume: V = N * $log_{2}(n)$ = 70 * 4,7549 = 332,8422.
 	\item Moeilijkheid: D = ($n_1$/2) * ($N_2/n_2$) = 1,5 * 1,8696 = 2,8043.
-	\item Moeite: E = D * V = 2,8043 * 332,8422 = 933,3894.
+	\item Inspanning: E = D * V = 2,8043 * 332,8422 = 933,3894.
 \end{itemize}
-De moeite meeteenheid kan vertaald worden naar codeertijd aan de hand van de volgende relatie: de tijd T = E/18 = 51,8550 seconden.
+De meeteenheid inspanning kan vertaald worden naar codeertijd aan de hand van de volgende relatie: de tijd T = E/18 = 51,8550 seconden.
 Halstead kan ook een schatting geven van het aantal errors die in de implementatie zitten door naar het aantal geleverde bugs te kijken: B = E\textsuperscript{2/3}/3000 = 0,1245.
 
 Deze metriek werd toegepast op het exporteren van de reducers in de gepubliceerde package en de code die nodig is om alle reducers opnieuw te importeren in een hoofdproject. Er kan geconcludeerd worden dat het een snelle codeertijd heeft dat gepaard gaat met een laag aantal geleverde bugs.
 
- 
+Een andere manier om de complexiteit van software te meten is via de cyclomatische complexiteit. Deze metriek is een quantitatieve meting van het aantal lineair onafhankelijke paden in de code en werd ontwikkeld door McCabe. 
+De cyclomatische complexiteit wordt gedefinieerd als M = E - N + 2P.\newline
+Waarbij: 
+\begin{itemize}
+	\item E = het aantal randen, verbindingen in een diagram
+	\item N = het aantal knooppunten in een diagram
+	\item P = het aantal geconnecteerde componenten
+\end{itemize}
+\autocite{cyclomatic}
+
+In dit geval gaat het om een lineaire structuur zoals gezien kan worden in de figuur. De geëxporteerde package bevat 23 verbindingen, 24 knooppunten en 1 geconnecteerde component. Hiermee kan de cyclomatische complexiteit bepaald worden door M = 23 - 24 + 2 = 1. Volgende figuur verkregen uit \textcite{complexitynumbers} geeft een overzicht weer van de complexiteit waarde en zijn overeenkomstige betekenis. 
+
+Hieruit kan afgelezen worden dat een nummer hoger dan 40 niet getest kan worden en een hoge kost en inspanning heeft. Een waarde tussen de 20 en 40 wordt aanzien als heel complexe code met lage test mogelijkheden en eveneens een hoge kost en inspanning. Een complexiteitswaarde tussen de 10 en 20 duidt op complexe code met gemiddelde testbaarheid, kost en inspanning. Een waarde tussen de één en 10 betekent dat de code goed gestructureerd en geschreven is, met een hoge testbaarheid en een lage kost en inspanning. Aangezien de berekende cyclomatische complexiteit 1 bedraagt, kan de conclusie getrokken worden dat de code gestructureerd is, een lage kost en inspanning heeft en makkelijk getest kan worden.
+
 
 
 
