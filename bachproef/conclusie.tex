@@ -34,6 +34,18 @@ Er zijn een aantal objectieve maatstaven die ontwikkeld zijn voor de complexitei
 Men maakt ook geen onderscheid naar soorten regels code. Er zijn echter eenvoudige regels code en er zijn complex samengestelde regels programmacode. Om hieraan tegemoet te komen, heeft Halstead een meer verfijnde metriek ontwikkeld. In zijn theorie is de complexiteit en de daarmee samenhangende programmeerinspanning afhankelijk van de omvang van een programma en van het niveau van structurering. Hoe groter de omvang, hoe hoger de programmeerinspanning. hoe hoger (compacter) het niveau van structurering, hoe lager de inspanning. Zowel omvang als niveau van structurering zijn functies van het aantal verschillende operatoren en operanden in een programma.
 \autocite{complexiteit01}
 
+Men kan nu deze metriek toepassen op het voorbeeld met de gemaakte package in deze studie. n1 staat voor het aantal verschillende operatoren, n2 staat voor het verschillende aantal operanden, N1 is het aantal operatoren en N2 is het aantal operanden. Met deze nummers kunnen een aantal metingen berekend worden:
+\begin{itemize}
+	\item Vocabulair van het programma: n = n1 + n2 = 1 + 23 = 24.
+	\item Lengte van het programma: N = N1 + N2 = 24 + 24 = 48.
+	\item Berekende lengte van het programma: N3 = n1 $log_{2}(n1)$ + n2 $log_{2}(n2)$ = 0 + 23 * 4,523662 = 104,0442.
+	\item Volume: V = N * $log_{2}(n)$ = 48 * 4.584963 = 220,0782.
+	\item Moeilijkheid: D = (n1/2) * (N2/n2) = 0,5 * 1,04347826 = 0,5217.
+	\item Moeite: E = D * V = 0,5217 * 220,0782 = 114,8148.
+\end{itemize}
+De moeite meeteenheid kan vertaald worden naar codeertijd aan de hand van de volgende relatie: de tijd T = E/18 = 6,3786 seconden.
+
+
 
 
 \section{Eindconclusie}
