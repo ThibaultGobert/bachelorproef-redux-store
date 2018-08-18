@@ -195,6 +195,19 @@ Redux middleware gaat andere problemen oplossen dan de Express middleware, maar 
 Één van de voordelen van Redux is dat de veranderingen van de state voorspelbaar en transparant zijn. Elke keer een action gedispatched wordt, zal de nieuwe state berekend en opgeslaan worden. De state kan niet veranderd worden door zichzelf, maar enkel ten gevolge van een specifieke action. Via middleware is het mogelijk om elke action die verzonden wordt in de app te loggen samen met de state die erna verkregen wordt. Wanneer iets mis gaat kan er dan makkelijk teruggekeken worden in de log en kan er snel gezien worden welke action de state corrupt heeft gemaakt. De meest naïve oplossing is om zelf de action en de volgende state te loggen elke keer de dispatch functie van de store wordt opgeroepen. Een betere oplossing is om de dispatch functie te vervangen. Met behulp van middleware kan zelf een logger geschreven worden die dan later enkel toegevoegd moet worden aan de store van de applicatie. Middleware wordt op dezelfde manier toegevoegd aan de store als de Redux devtools extension. Waar voor de Redux devtools extension een extra parameter wordt toegevoegd zal voor de middleware ook een parameter worden toegevoegd die meerdere middleware kan bevatten. 
 \autocite{Redux02}
 
+Om een betere verstandhouding van Redux te krijgen werd ook naar de voorgangers van Redux gekeken, waaronder Flux. Hieronder worden de verschillen en de gelijkenissen tussen Flux en Redux overlopen. 
+Het eerste verschil is dat Flux een patroon is en Redux een library. Flux is een mooiere naam voor het observer patroon die wat aangepast is voor React. Facebook heeft echter ook een aantal tools ontwikkeld die helpen in de implementatie van het Flux patroon. 
+
+Flux en Redux hebben beide actions. Deze Actions kunnen vergeleken worden met events. In Flux is een action een simpel JavaScript object en dat is in het standaard geval ook zo in Redux. Wanneer er gebruik gemaakt wordt van Redux middleware kan het echter zo zijn dat actions ook functies en promises kunnen zijn. 
+
+Met Flux is het de conventie dat er meerdere stores per applicatie zijn waarbij elke store een singleton object is. In Redux is het de conventie dat er maar één store per applicatie is. 
+
+Flux heeft een enkele dispatcher en alle actions moeten door deze dispatcher gaan, dit is eveneens een singleton object. Een Flux applicatie kan geen meerdere dispatchers hebben. Dit is nodig omdat een Flux applicatie meerdere stores kan hebben en de afhankelijkheden tussen deze stores hebben een manager nodig, de dispatcher. In Redux is er geen dispatcher entiteit. In plaats daarvan heeft de store een dispatch proces van zichzelf. Een Redux store heeft een aantal simpele API functies, één daarvan is het dispatchen van actions.
+
+De logica van wat er moet gebeuren wanneer er een action ontvangen wordt zit in de store zelf bij Flux. De store heeft ook de flexibiliteit om te kiezen welke stukken data deze publiekelijk toegankelijk wil maken. Het slimste object in Flux is de store. In Redux zit de logica dan in de reducer. Een store kan niet gedefinieerd worden zonder reducer functie. Hier is het slimste object de reducer. Redux gaat ook gewoon alle data beschikbaar maken die geretourneerd wordt van de reducer. 
+
+Nog een groot verschil is dat de state immutable is in Redux. Dit wordt makkelijk bekomen door van de reducers pure functies te maken. In Flux is hier geen restrictie, de state kan gemuteerd worden zoals gewenst.
+\autocite{flux}
 
 \section{Npm}
 Om de twee projecten met elkaar te laten communiceren, wordt gebruik gemaakt van npm. De extensie op Redux zal geschreven worden en onder een eigen package gepubliceerd worden op npm, op deze manier kan de geschreven extensie aangesproken worden. 
