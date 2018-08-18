@@ -69,6 +69,8 @@ In de laatste fase is de component niet meer nodig en zal deze via \textit{compo
 
 
 \section{Redux}
+De requirements voor JavaScript single-page applicaties worden meer en meer gecompliceerd. De code moet veel meer state beheren dan vroeger. Deze state kan server responses en gecachete data, maar ook lokaal gecreëerde data die nog niet naar de server is doorgestuurd bevatten. Deze steeds verandere state beheren is moeilijk. Als een model een ander model kan updaten, waar een view dan een ander model kan updaten, die een nieuw model gaat updaten, die op zijn beurt ook nog eens een view kan updaten. Op een gegeven moment wordt het niet meer duidelijk wat er gebeurt in de applicatie. Wanneer een systeem ondoorzichtig en niet-deterministisch is, wordt het moeilijk om bugs te reproduceren of om nieuwe features toe te voegen. Deze complexiteit is moeilijk om mee om te gaan omdat er twee concepten in verwikkeld worden die moeilijk vatbaar zijn: mutatie en asynchroniteit. Beide kunnen apart heel handig zijn, maar samen kan dit voor heel wat problemen zorgen.
+
 Door stateful components die elkaar aanroepen verhoogt de complexiteit om de state te beheren. Om tegen te gaan dat de controle verloren gaat over wanneer, hoe en waarom de state geüpdatet wordt, kan redux geïntroduceerd worden als oplossing om de state te managen. Redux zal eigenlijk proberen om de veranderingen op de state voorspelbaar te maken door bepaalde restricties op te leggen omtrent het updaten van de state. Deze restricties staan beschreven in de \textit{drie principes} van Redux.
 
 \subsection{Drie principes}
@@ -152,7 +154,7 @@ Een verbetering die ergens aan toegevoegd kan worden, in figuur 3 is het de redu
 Enkel het hoofdproject wordt geconnecteerd met de redux-devtools extension. Wanneer dus gekeken wordt naar de state tree, dan is dit deze van het hoofdproject. Wanneer er dus meerdere projecten met elkaar gecombineerd worden, zal er nog steeds enkel de state tree van de hoofdapplicatie staan. Het zou dus een absolute meerwaarde zijn om ook deze debug tool te kunnen gebruiken met de gecombineerde state tree van beide projecten.
 \autocite{devtools}
 
-\subparagraph{Connectie met React}
+\paragraph{Connectie met React}
 React bindings zitten echter niet standaard in Redux, eerst moet de npm-package react-redux worden geïnstalleerd. Om React en Redux samen te laten functioneren wordt gebruik gemaakt van een opsplitsing in presentationele en container components. (zie figuur 4) 
 
 Presentationele components zijn -zoals de naam aangeeft- prioritair voor de visualisatie. Ze verkrijgen enkel data via de props en sturen geen actions aan. 
@@ -161,12 +163,20 @@ Daar waar presentationele components gericht zijn op de visualisatie, zijn de co
 \autocite{prescon}
 \autocite{prescon2}
 
-
 \subparagraph{Containers}
 Het idee achter containers is dat ze de data gaan ophalen en dan de corresponderende sub-component gaan renderen. Deze data wordt gehaald uit de state en omgezet naar props voor die container. Daarna krijgen de sub-componenten de juiste props mee om hun data te renderen. 
 \autocite{containercomp}
 
-\subsection{Npm}
+\section{Middleware}
+In het Redux framework is middleware de code die zich bevindt tussen het krijgen van een request en het verzenden van een response. Express bijvoorbeeld kan CORS headers (mechanisme dat extra HTTP headers gebruikt om te laten weten aan de browser dat een web applicatie met een bepaalde oorsprong gemachtigd is om resources te gebruiken van een server met een verschillende oorsprong), logging, compressie… toevoegen. De beste voorziening van middleware is dat het chainable is, er kan gebruik gemaakt worden van meerdere onafhankelijke third-party middleware in een enkel project.
+ 
+Redux middleware gaat andere problemen oplossen dan de Express middleware, maar het is conceptueel dezelfde manier. Redux middleware gaat een third-party extension point voorzien tussen het dispatchen van een action en het moment dat deze action een reducer bereikt. Redux middleware wordt voornamelijk gebruikt om te loggen, voor crash reports, routing…
+
+Één van de voordelen van Redux is dat de veranderingen van de state voorspelbaar en transparant zijn. Elke keer een action gedispatched wordt, zal de nieuwe state berekend en opgeslaan worden. De state kan niet veranderd worden door zichzelf, maar enkel ten gevolge van een specifieke action. Via middleware is het mogelijk om elke action die verzonden wordt in de app te loggen samen met de state die erna verkregen wordt. Wanneer iets mis gaat kan er dan makkelijk teruggekeken worden in de log en kan er snel gezien worden welke action de state corrupt heeft gemaakt. De meest naïve oplossing is om zelf de action en de volgende state te loggen elke keer de dispatch functie van de store wordt opgeroepen. Een betere oplossing is om de dispatch functie te vervangen. Met behulp van middleware kan zelf een logger geschreven worden die dan later enkel toegevoegd moet worden aan de store van de applicatie. Middleware wordt op dezelfde manier toegevoegd aan de store als de Redux devtools extension. Waar voor de Redux devtools extension een extra parameter wordt toegevoegd zal voor de middleware ook een parameter worden toegevoegd die meerdere middleware kan bevatten. 
+\autocite{Redux02}
+
+
+\section{Npm}
 Om de twee projecten met elkaar te laten communiceren, wordt gebruik gemaakt van npm. De extensie op Redux zal geschreven worden en onder een eigen package gepubliceerd worden op npm, op deze manier kan de geschreven extensie aangesproken worden. 
 
 npm is 's werelds grootste software register met ongeveer 3 biljoen downloads per week. Het register bevat meer dan 600.000 packages. Open source developers van elk continent gebruiken npm voor het delen en lenen van packages. Veel organisaties gebruiken npm ook voor privaat development, zoals in dit onderzoek ook het geval is. 

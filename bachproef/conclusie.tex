@@ -13,7 +13,7 @@
 %% uitnodigen tot verder onderzoek?
 
 \section{Inleiding}
-Redux is een framework die nog maar 3 jaar bestaat. Er is wel al veel documentatie beschikbaar en veel problemen zijn reeds ontdekt en opgelost, maar zeker niet alles staat beschreven. 
+Redux is een framework dat nog maar 3 jaar bestaat. Er is wel al veel documentatie beschikbaar en veel problemen zijn reeds ontdekt en opgelost, maar zeker niet alles staat beschreven. 
 
 Bijvoorbeeld hoe 2 React-Redux projecten met elkaar kunnen interageren staat nergens beschreven. Omdat hier geen best practices vermeld werden, is de keuze gemaakt om via npm packages te werken. Op deze manier kan het ene project snel geïntegreerd worden in het andere. 
 
@@ -63,9 +63,18 @@ In dit geval gaat het om een lineaire structuur zoals gezien kan worden in de fi
 Hieruit kan afgelezen worden dat een nummer hoger dan 40 niet getest kan worden en een hoge kost en inspanning heeft. Een waarde tussen de 20 en 40 wordt aanzien als heel complexe code met lage test mogelijkheden en eveneens een hoge kost en inspanning. Een complexiteitswaarde tussen de 10 en 20 duidt op complexe code met gemiddelde testbaarheid, kost en inspanning. Een waarde tussen de één en 10 betekent dat de code goed gestructureerd en geschreven is, met een hoge testbaarheid en een lage kost en inspanning. Aangezien de berekende cyclomatische complexiteit 1 bedraagt, kan de conclusie getrokken worden dat de code gestructureerd is, een lage kost en inspanning heeft en makkelijk getest kan worden.
 
 
-
-
-
+Een derde manier om de complexiteit van een programma te meten is aan de hand van een maintainability index. De maintainability index is een metriek  die meet hoe onderhoudbaar de source code is. Deze index wordt berekend door een aantal factoren, de formule maakt gebruik van lines of code, cyclomatic complexity en Halstead volume. Deze metriek wordt onderandere gebruikt in verschillende geautomatiseerd software tools in Visual Studio, daar gebruikt het een schaal van 0 tot 100.
+Om deze index te meten wordt gebruik gemaakt van de formule: \newline MI = 171 - 5,2 * ln(V) - 0,23 * (G) - 16,2 * ln(LOC) \\
+Hierbij horend: 
+\begin{itemize}
+	\item V = Halstead volume
+	\item G = Cyclomatische complexiteit
+	\item LOC = het aantal lines of code
+\end{itemize}
+\autocite{maintainability01}\newline\newline
+Wanneer deze formule toegepast wordt op het voorbeeld van de npm package met de geëxporteerde reducers en de code die nodig is in het hoofdproject om deze reducers opnieuw te importeren, dan krijgen we: \newline
+MI = 171 - 5,2 * ln(332,8422) - 0,23*1 - 16,2*ln(43) = 171 - 30,1999 - 0,23 - 60.9314 = 79,6387. \newline
+Volgens \textcite{maintainability02} heeft een programma met hoge onderhoudbaarheid een waarde tussen de 20 en 100. Een waarde tussen 10 en 19 wil zeggen dat de code een gemiddelde onderhoudbaarheid heeft en een waarde tussen de 0 en 9 duidt op een slechte, lage onderhoudbaarheid van het programma. In dit voorbeeld is de maintainability index 79,6387, dit wil zeggen dat er op basis van deze index kan afgeleid worden dat het programma een hoge, goeie onderhoudbaarheid heeft. Men kan echter geen conclusie maken op basis van de maintainability index alleen. Dit komt omdat deze index een bewerking uitvoert met 3 metrieken. Onder deze metrieken bevinden zich de lines of code en de cyclomatische complexiteit. Om deze goeie onderhoudbaarheid te testen kan er gekeken worden naar de andere metingen die zijn uitgevoerd.  Halstead had een goeie waarde met een lage codeertijd en een laag aantal geleverde bugs. De cyclomatic complexity had uiteraard ook een goeie waarde aangezien het gaat om een volledig lineaire structuur (M = 1). Deze combinatie van metrieken zorgt ervoor dat er finaal geconcludeerd kan worden dat het programma een hoge onderhoudbaarheid heeft met een lage complexiteit. 
 
 \section{Eindconclusie}
 Dit onderzoek is nog niet klaar, de basis is wel gelegd om verder onderzoek te doen naar een methode om de root reducers van beide projecten met elkaar te combineren zonder dat daar veel extra onderhoud aan te pas komt. Als uitkomst was wel verwacht dat er een soort uncombineReducers zou gemaakt worden, helaas was dit niet mogelijk door de implementatie van deze functie. Er is wel een alternatief gevonden om toch het probleem op te lossen. 
