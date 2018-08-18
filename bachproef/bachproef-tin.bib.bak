@@ -117,7 +117,7 @@
 
 @Article{maintainability01,
   title     = {Maintainability index},
-  timestamp = {2018/08/18},
+  timestamp = {2018-08-18},
   url       = {http://www.projectcodemeter.com/cost_estimation/help/GL_maintainability.htm},
 }
 

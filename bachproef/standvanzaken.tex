@@ -167,9 +167,11 @@ Nieuwe stores aanmaken is niet het eerste waar naar gekeken moet worden, het is 
 Gelijkaardig, het is mogelijk om een de store instantie aan te spreken door deze rechtstreeks te importeren, dit is eveneens geen aan te raden patroon in Redux. Wanneer een instantie van de store wordt gemaakt en geëxporteerd uit de module, dan wordt deze een singleton. Dit wil zeggen dat het moeilijker wordt om een Redux applicatie als een component van een grotere applicatie te isoleren. Er kan dan ook geen server rendering geactiveerd worden, want op de server worden er verschillende store instanties gecreëerd voor elke request die gemaakt wordt.
 
 Het is best practice om de root component te wrappen in een <Provider> en dan gaat React Redux zorgen dat de store doorgegeven wordt naar beneden. Op deze manier moeten components geen store module importeren en worden de isolatie van een Redux app of het activeren van server rendering veel makkelijker om te implementeren.
-
-
 \autocite{Redux02}
+
+Dit staat ook beschreven in een provider patroon volgens \textcite{provider}. Veel React libraries moeten hun data doorgeven doorheen de component tree. Bijvoorbeeld, Redux moet zijn store doorgeven en React Router moet de huidige locatie doorgeven. Dit zou kunnen opgelost worden door een gedeelde, muteerbare state. Dit werkt enkel als er één state is. Wanneer er geprerenderd wordt op de server is het onmogelijk om te vertrouwen op deze implementatie. Gelukkig zorgt React voor een manier om de data van boven naar beneden te krijgen: \textit{context}. Dit kan aanzien worden als het globale object van de component tree.
+
+Helemaal bovenaan in de app moet er dus een provider zijn. De enige rol die deze provider zal hebben is het toevoegen van gewenste data aan de context van de tree zodat alle afstammelingen ook toegang hebben tot deze data.
 
 
 \paragraph{Connectie met React}
