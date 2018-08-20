@@ -23,7 +23,7 @@ Om deze analyse verder uit te voeren werd gekeken naar wat de store van het hoof
 \subsection{Functie combineReducers}
 In de eerste methode werd geprobeerd om de root reducer van het scratch project rechtstreeks te integreren in de store van het hoofdproject. In de configuratie van de store wordt meegegeven wat de root reducer is en wat de initiële state van de applicatie is. De bedoeling was om een grote gecombineerde root reducer te maken om daarmee de store te initialiseren. Het enige wat hier aangepast werd aan de scratch-integration package was het exporteren van de root reducer in de index file.
 
-Twee root reducers met elkaar combineren via de methode \textit{combineReducers} (figuur 5) gaat echter niet zomaar. Deze methode is een functie met als parameter de reducers die moeten gecombineerd worden. Zoals eerder vermeld bevat een reducer een key en een value. De parameter bevat dus een lijst van reducers met elk hun key en value. De functie \textit{combineReducers} overloopt deze lijst en vraagt eerst alle keys op en schrijft deze weg in een nieuwe variabele. Daarna wordt voor elke reducer key gekeken of de corresponderende value een functie is. Als dit zo is, dan wordt deze reducer weggeschreven in een nieuwe lijst variabele.   
+Twee root reducers met elkaar combineren via de methode \textit{combineReducers} (figuur 2.1) gaat echter niet zomaar. Deze methode is een functie met als parameter de reducers die moeten gecombineerd worden. Zoals eerder vermeld bevat een reducer een key en een value. De parameter bevat dus een lijst van reducers met elk hun key en value. De functie \textit{combineReducers} overloopt deze lijst en vraagt eerst alle keys op en schrijft deze weg in een nieuwe variabele. Daarna wordt voor elke reducer key gekeken of de corresponderende value een functie is. Als dit zo is, dan wordt deze reducer weggeschreven in een nieuwe lijst variabele.   
 
 Deze functie retourneert dan opnieuw een functie 'combination'. In de scope van deze functie zitten onder andere twee lijsten. Een lijst voor de finale reducer keys en een lijst voor de finale reducers. 
  
@@ -33,7 +33,13 @@ Omdat deze na combinatie in de scope van de functie zitten, is het onmogelijk om
 Als tweede methode werd gezocht naar een alternatief. De bedoeling van deze extensie zou als het ware een uncombineReducers methode zijn. Op deze manier kan snel alles los gemaakt worden van elkaar om dan later opnieuw te kunnen combineren. Op deze manier kan ook een lineaire structuur verkregen worden. Momenteel is het niet mogelijk om van reeds gecombineerde root reducers een nieuwe reducer te combineren met behoud van functionaliteit van beide root reducers en een lineaire structuur in plaats van een geneste structuur. 
 
 \paragraph{Analyse}
-Om een extensie te schrijven is er een duidelijk inzicht nodig in de methode combineReducers. Hiervoor werd dus eerst een analyse gedaan van deze methode. 
+Om een extensie te schrijven is er een duidelijk inzicht nodig in de methode combineReducers (figuur 2.1). Hiervoor werd dus eerst een analyse gedaan van deze methode.
+\begin{figure}
+	\begin{center}
+		\caption{Methode combineReducers uit de Redux package. Verkregen van \textcite{Redux01}}
+		\includegraphics[width=14cm]{img/combineReducers}\\[0.5cm]
+	\end{center}
+\end{figure} 
 
 De methode neemt reducers als parameter. Er worden eerst twee lokale variabelen gemaakt, de reducerKeys met daarin de keys van de reducers die als parameter werden meegegeven en de finalReducers. Daarna wordt -zolang er reducerKeys zijn- de juiste reducer opgehaald aan de hand van zijn key en wordt er gekeken als het type een functie is of niet. Als het inderdaad een functie is dan zal deze worden opgeslaan in de finalReducers.
 
@@ -41,12 +47,19 @@ Nu kan er een nieuwe variabele finalReducerKeys aangemaakt worden met daarin de 
 
 \paragraph{Werkwijze}
 
-Bij een reducer die voor de eerste keer gecombineerd wordt, zal door de functie \textit{object.keys} elke key aangesproken worden. Hierdoor zal elke reducer opgenomen worden in de combinatie. Wanneer een combinatie tracht gemaakt te worden van een reeds gecombineerde reducer, dan zal door de functie \textit{object.keys} enkel de gecombineerde key aanspreken en dus niet alle onderliggende reducers. Er werd getracht om van een root reducer, die reeds gecombineerd is, de reducer keys aan te spreken van zijn onderliggende reducers. Omdat deze reducers al eens gecombineerd zijn, zitten deze onderliggende reducers in de scope van de functie combineReducers. Daardoor is het niet mogelijk om van een gecombineerde reducers opnieuw zijn reducers aan te spreken, deze kunnen niet worden aangesproken. Indien dit wel mogelijk zou zijn, kon op deze manier een lineaire combinatie gemaakt worden van meerdere root reducers. 
+Bij een reducer die voor de eerste keer gecombineerd wordt (figuur 2.1), zal door de functie \textit{object.keys} elke key aangesproken worden. Hierdoor zal elke reducer opgenomen worden in de combinatie. Wanneer een combinatie tracht gemaakt te worden van een reeds gecombineerde reducer, dan zal door de functie \textit{object.keys} enkel de gecombineerde key aanspreken en dus niet alle onderliggende reducers. Er werd getracht om van een root reducer, die reeds gecombineerd is, de reducer keys aan te spreken van zijn onderliggende reducers. Omdat deze reducers al eens gecombineerd zijn, zitten deze onderliggende reducers in de scope van de functie combineReducers. Daardoor is het niet mogelijk om van een gecombineerde reducers opnieuw zijn reducers aan te spreken, deze kunnen niet worden aangesproken. Indien dit wel mogelijk zou zijn, kon op deze manier een lineaire combinatie gemaakt worden van meerdere root reducers. 
 
 Omdat dit niet mogelijk is, wordt de functionaliteit van onderliggende reducers niet meegenomen. Dit zorgt er dan weer voor dat deze reducers niet opgenomen worden in de state. Vanaf het moment dat een reducer nodig zou zijn om functionaliteit af te handelen, zal de app crashen omdat het een undefined reducer zal oproepen. 
 
 Om hier een oplossing voor te bieden werd gekeken naar een alternatief voor de methode combineReducers. 
-Er werd geprobeerd om geen rechtstreeks gebruik te maken van de root reducer van Scratch, maar om alle reducers te combineren in een groot object en dan dat object te exporteren. Om deze methode mogelijk te maken moet de root reducer van het hoofdproject ook een object zijn en geen gecombineerde functie. Een voorbeeld kan gevonden worden in figuur 6. Anders keert het probleem van de function scope terug. Met beide root reducers als object is het wel mogelijk om een gecombineerde root reducer af te leveren. De lijsten van de reducer keys en reducers bevatten dan de keys en reducers van beide projecten. Hierdoor wordt dus de volledige functionaliteit omvat van beide projecten.
+Er werd geprobeerd om geen rechtstreeks gebruik te maken van de root reducer van Scratch, maar om alle reducers te combineren in een groot object en dan dat object te exporteren. Om deze methode mogelijk te maken moet de root reducer van het hoofdproject ook een object zijn en geen gecombineerde functie. Een voorbeeld kan gevonden worden in (zie figuur 2.2). Anders keert het probleem van de function scope terug. Met beide root reducers als object is het wel mogelijk om een gecombineerde root reducer af te leveren. De lijsten van de reducer keys en reducers bevatten dan de keys en reducers van beide projecten. Hierdoor wordt dus de volledige functionaliteit omvat van beide projecten.
+
+\begin{figure}
+	\begin{center}
+		\caption{Object export methode in plaats van combineReducers}
+		\includegraphics[width=8cm]{img/combineReducers-object-export}\\[0.5cm]
+	\end{center}
+\end{figure}
  
 \subsubsection{Nadelen}
 Een eerste nadeel van deze methode is dat er dan ook met de root reducer van het hoofdproject rekening moet gehouden worden. Deze mag dan namelijk ook niet gecombineerd zijn. Om deze methode uit te voeren was er een gedeeltelijke herstructurering nodig, waardoor deze methode al niet meer optimaal is. 

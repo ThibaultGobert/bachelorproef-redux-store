@@ -29,15 +29,31 @@ In toevoeging met data als input nemen (via \textit{props}), kan een component z
 \autocite{React01}
 
 
+
+
 \subsection{React lifecycle}
 Met React is het mogelijk om components te creëren door de voorziene methode van React te gebruiken. Deze methode verwacht een \textit{render} methode en zal een lifecycle triggeren, de lifecycle van een component. 
-Deze lifecycle kan onderverdeeld worden in 4 grote fasen zoals beschreven in figuur 1 en 2:
+Deze lifecycle kan onderverdeeld worden in 4 grote fasen zoals beschreven in figuur 1.1 en 1.2:
+\newline
 \begin{itemize}
 	\item initialisatie
 	\item mounten
 	\item updaten
 	\item unmounten
 \end{itemize}
+\begin{figure}
+	\begin{center}
+		\caption{De initialisatie en de mounting fase van de React lifecycle. Verkregen van \textcite{reactlifecycle}.}
+		\includegraphics[width=8cm]{img/react-lifecycle1}\\[0.5cm]
+	\end{center}
+\end{figure}
+
+\begin{figure}
+	\begin{center}
+		\caption{De update en de unmount fase van de React lifecycle. Verkregen van \textcite{reactlifecycle}.}
+		\includegraphics[width=15cm]{img/react-lifecycle2}\\[0.5cm]
+	\end{center}
+\end{figure}
 
 \paragraph{Initialisatie}
 In deze fase worden de initiële state en de default props ingesteld. De initiële state wordt in de constructor ingesteld, deze kan later altijd veranderd worden door de \textit{setState} methode. \textit{defaultProps} is een property van \textit{Component} die overschreven kan worden met nieuwe waarden voor de props. 
@@ -149,7 +165,13 @@ Een manier om deze flow te controleren of te debuggen is via de redux-devtools e
 De Redux devtools extension wordt gebruikt voor het debuggen van veranderingen in de state van de applicatie. Met deze extension kan er op deze manier gekeken worden naar de volledige tree alsook naar de actions die verzonden worden. Er kan dan gekozen worden om bepaalde actions uit te voeren of te pauzeren tijdens een aantal actions. Dit zorgt dus voor een preciezere debugging. Vooraleer van deze extension gebruik kan gemaakt worden moet deze extension eerst gedefinieerd worden in de store. Deze wordt toegevoegd als \textit{enhancer}. 
 
 \subparagraph{Enhancer}
-Een verbetering die ergens aan toegevoegd kan worden, in figuur 3 is het de redux devtools extension die toegevoegd wordt aan de store om een extra debugging tool aan te bieden.
+Een verbetering die ergens aan toegevoegd kan worden, in figuur 1.3 is het de redux devtools extension die toegevoegd wordt aan de store om een extra debugging tool aan te bieden.
+\begin{figure}
+	\begin{center}
+		\caption{Redux devtools extension debugging tool. Verkregen van \textcite{devtools}.}
+		\includegraphics[width=14cm]{img/redux-devtools}\\[0.5cm]
+	\end{center}
+\end{figure}
 
 Enkel het hoofdproject wordt geconnecteerd met de redux-devtools extension. Als dus gekeken wordt naar de state tree, dan is dit deze van het hoofdproject. Wanneer er meerdere projecten met elkaar gecombineerd worden, zal er nog steeds enkel de state tree van de hoofdapplicatie staan. Het zou dan ook een absolute meerwaarde zijn om deze debug tool te kunnen gebruiken met de gecombineerde state tree van beide projecten.
 \autocite{devtools}
@@ -175,7 +197,14 @@ Helemaal bovenaan in de app moet er dus een provider zijn. De enige rol die deze
 
 
 \paragraph{Connectie met React}
-React bindings zitten echter niet standaard in Redux, eerst moet de npm-package react-redux worden geïnstalleerd. Om React en Redux samen te laten functioneren wordt gebruik gemaakt van een opsplitsing in presentationele en container components. (zie figuur 4) 
+React bindings zitten echter niet standaard in Redux, eerst moet de npm-package react-redux worden geïnstalleerd. Om React en Redux samen te laten functioneren wordt gebruik gemaakt van een opsplitsing in presentationele en container components. (zie figuur 1.4 uit de lijst van figuren) 
+
+\begin{figure}
+	\begin{center}
+		\caption{Verschillen tussen presentationele en container components. Verkregen van \textcite{prescon}}
+		\includegraphics[width=13cm]{img/presentational-vs-container}\\[0.5cm]
+	\end{center}
+\end{figure}
 
 Presentationele components zijn -zoals de naam aangeeft- prioritair voor de visualisatie. Ze verkrijgen enkel data via de props en sturen geen actions aan. 
 
@@ -236,7 +265,8 @@ De meeste React-Redux projecten maken gebruik van Webpack. Webpack heeft veel po
 
 Standaard is dit entry point de index file, maar deze kan uiteraard veranderd worden of er kunnen zelfs meerdere entry points toegevoegd worden. Samen met de entry point(s) wordt meestal ook de output property gedefinieerd. Via deze property weet webpack naar waar de bundels verzonden moeten worden en hoe deze moeten heten. De standaardsetting hiervoor is de dist folder.
 
-In de meeste applicaties zitten er echter niet enkel JavaScript files. Soms worden image imports gedaan of wordt er via een url gewerkt. Webpack verstaat echter enkel JavaScript files. Om het mogelijk te maken om andere bestandtypes te converteren in geldige modules moeten loaders toegevoegd worden. Deze modules kunnen dan gebruikt worden door de applicatie en toegevoegd worden aan de dependency graph. 
+In de meeste applicaties zitten er echter niet enkel JavaScript files. Soms worden image imports gedaan of wordt er via een url gewerkt. Webpack verstaat echter enkel JavaScript files. Om het mogelijk te maken om andere bestandtypes te converteren in geldige modules moeten loaders toegevoegd worden. Deze modules kunnen dan gebruikt worden door de applicatie en toegevoegd worden aan de dependency graph.
+\autocite{webpack} 
 
 \begin{description}
 	\item[Een loader] heeft een \textit{test} en een \textit{use} property. De test property geeft weer welke file of files die er getransformeerd moeten worden. Een use property toont aan welke loader gebruikt moet worden voor deze transformatie.

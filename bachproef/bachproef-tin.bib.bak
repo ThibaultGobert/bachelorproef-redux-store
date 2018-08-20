@@ -145,4 +145,12 @@
   url       = {https://edgecoders.com/the-difference-between-flux-and-redux-71d31b118c1?gi=5b20b1937b84},
 }
 
+@Article{webpack,
+  author    = {Juho Vepsäläinen},
+  title     = {What is webpack},
+  year      = {2017},
+  timestamp = {2018-08-18},
+  url       = {https://survivejs.com/webpack/what-is-webpack/},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

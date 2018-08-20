@@ -34,6 +34,18 @@ Er zijn een aantal objectieve maatstaven die ontwikkeld zijn om de complexiteit 
 Men maakt ook geen onderscheid naar soorten regels code. Er zijn echter eenvoudige regels code en er zijn complex samengestelde regels programmacode. Om hieraan tegemoet te komen, heeft Halstead een meer verfijnde metriek ontwikkeld. In zijn theorie is de complexiteit en de daarmee samenhangende programmeerinspanning afhankelijk van de omvang van een programma en van het niveau van structurering. Hoe groter de omvang, hoe hoger de programmeerinspanning. Hoe hoger (compacter) het niveau van structurering, hoe lager de inspanning. Zowel omvang als niveau van structurering zijn functies van het aantal verschillende operatoren en operanden in een programma.
 \autocite{complexiteit01}
 
+
+
+
+
+\begin{figure}
+	\begin{center}
+		\caption{De formule van Halstead uitgelegd. Verkregen van \textcite{halstead}}
+		\includegraphics[width=16cm]{img/halstead}\\[0.5cm]
+	\end{center}
+\end{figure}
+
+
 Men kan nu deze metriek toepassen op het voorbeeld met de gemaakte package in deze studie. n1 staat voor het aantal verschillende operatoren, n2 staat voor het verschillende aantal operanden, N1 is het aantal operatoren en N2 is het aantal operanden. Met deze nummers kunnen een aantal metingen berekend worden:
 \begin{itemize}
 	\item Vocabulair van het programma: n = $n_1$ + $n_2$ = 3 + 23 = 27.
@@ -82,6 +94,29 @@ Dit onderzoek is nog niet klaar, de basis is wel gelegd om verder onderzoek te d
 Achteraf gezien bleek het een goede keuze om voor het Scratch open source project te kiezen. Dit is een project dat nog steeds in development is en dat nu overschakelt op JavaScript, waardoor het zeer interessant wordt om dit te kunnen integreren in een eigen applicatie.   
 
 Dit is een belangrijk onderzoek omdat er nog geen soortgelijke onderzoeken zijn gedaan of gedocumenteerd werden.
-Er zijn een aantal statistieken gevonden die duidelijk maken dat het een probleemstelling is die uitnodigt tot verder onderzoek. De npm package die de reducer exports verzorgde is opgericht eind februari. Dan werd gezocht naar hoe het mogelijk wordt om dit project snel integreerbaar te maken, waar tot een tijdelijke oplossing is gekomen begin maart. Deze package werd sinds dan ruim 7000 keer gedownload (figuur 9) met piekmomenten van 2168 downloads per week (figuur 8) en 946 downloads per dag (figuur 7) in maart. Door tijdsgebrek was het echter onmogelijk om deze package constant up-to-date te houden. Eind maart kan er nog een update gezien worden door het stijgende aantal downloads, wat duidt op het feit dat er wel vraag naar is.
+Er zijn een aantal statistieken gevonden die duidelijk maken dat het een probleemstelling is die uitnodigt tot verder onderzoek. De npm package die de reducer exports verzorgde is opgericht eind februari. Dan werd gezocht naar hoe het mogelijk wordt om dit project snel integreerbaar te maken, waar tot een tijdelijke oplossing is gekomen begin maart. Deze package werd sinds dan ruim 7000 keer gedownload (figuur 3.4) met piekmomenten van 2168 downloads per week (figuur 3.3) en 946 downloads per dag (figuur 3.2) in maart. Door tijdsgebrek was het echter onmogelijk om deze package constant up-to-date te houden. Eind maart kan er nog een update gezien worden door het stijgende aantal downloads, wat duidt op het feit dat er wel vraag naar is.
+
 
 Als conclusie kan ook gesteld worden dat het momenteel niet mogelijk is om twee root reducers met elkaar te combineren via de functie combineReducers waarbij de functionaliteit van beide root reducers behouden wordt. Hiernaast kan wel gezegd worden dat het mogelijk is om de functionaliteit van twee React-Redux projecten te combineren door een export te maken van de reducers die de functionaliteit ondersteunen die geïntegreerd zou moeten worden in het project. Deze export moet wel beschikbaar gemaakt worden op npm om daarna de mogelijk te bieden om deze als dependency te installeren. Het is ook mogelijk om het volledige project te bundelen via webpack eens er geen veranderingen meer nodig zijn. Na objectief onderzoek blijkt dit een weinig complexe en goed onderhoudbare oplossing. Toch kan er nog altijd onderzoek gebeuren naar een methode om twee gecombineerde reducers met elkaar te combineren. 
+
+
+\newpage
+
+\begin{figure}
+	\begin{center}
+		\caption{Downloads per dag van de geëxporteerde package. Verkregen van \textcite{npm}}
+		\includegraphics[width=16cm]{img/package-downloads-day}\\[0.5cm]
+	\end{center}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\caption{Downloads per week van de geëxporteerde package. Verkregen van \textcite{npm}}
+		\includegraphics[width=16cm]{img/package-downloads-week}\\[0.5cm]
+	\end{center}
+\end{figure}
+\begin{figure}
+	\begin{center}
+		\caption{Totale downloads van de geëxporteerde package. Verkregen van \textcite{npm}}
+		\includegraphics[width=16cm]{img/package-total-downloads}\\[0.5cm]
+	\end{center}
+\end{figure}
