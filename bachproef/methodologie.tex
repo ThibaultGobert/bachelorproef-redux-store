@@ -58,6 +58,10 @@ Elke dependency die gebruikt wordt, moet ook mee overgenomen worden in de packag
 
 Dit derde nadeel kan echter wel opgelost worden. Via webpack is het mogelijk om de configuraties van Scratch te bundelen en weg te schrijven in een dist map om zo te exporteren als een library. In dit geval gaat het pas gebeuren wanneer de environment variabele op 'production' staat. Een tweede package op npm met de nodige configuraties voor beide projecten wordt overbodig wanneer deze oplossing gebruikt wordt in de package waar de reducers geëxporteerd worden. Dit bespaart onderhoudswerk en vermindert de complexiteit.
 
-Om deze oplossing te testen werd gebruik gemaakt van een aantal objectieve methodes om de complexiteit te bepalen. Eerst werd er gekeken naar de 
+Om deze oplossing te testen werd gebruik gemaakt van een aantal objectieve methodes om de complexiteit te bepalen. Eerst werd er gekeken naar de Halstead complexiteitsmeting. Deze metriek houdt rekening met de volume (lines of code) van de applicatie, alsook de moeilijkheid en de inspanning die geleverd moet worden. Als resultaat van deze metriek werd geconcludeerd dat er weinig inspanning moet geleverd worden en dat de oplossing een lage complexiteit heeft. 
+
+Ten tweede werd er gekeken naar de cyclomatische complexiteit van de oplossing. Deze metriek kijkt naar het aantal lineair onafhankelijke paden doorlopen worden door de oplossing. Gezien het gaat om een lineaire oplossing kon er hier ook vrij snel geconstateerd worden dat er een lage complexiteit is volgens deze metriek. 
+
+De laatste objectieve methode is de maintainability index. Deze is een combinatie van voorgaande metrieken. Op basis van de maintainability index alleen kan geen oordeel geveld worden. Een hoge maintainability index wil niet rechtstreeks zeggen dat er een goeie onderhoudbaarheid is en dat het programma een lage complexiteit heeft. Er kan namelijk een hoge maintainability index verkregen worden met een slechte waarde voor de cyclomatische complexiteit en een goeie voor de Halstead metriek of omgekeerd. Gezien voorgaande complexiteitsmetingen reeds positief waren kan er hier ook de conclusie getrokken worden dat het gaat om een weinig complexe, goed onderhoudbare oplossing.
 
 
